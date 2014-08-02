@@ -250,7 +250,7 @@ metalsmith( __dirname )
 
             files[ out ] = files[ file ];
             files[ out ].contents = new Buffer( css );
-            delete files[ out ];
+            delete files[ file ];
 
         }.bind( this ) );
     } )
