@@ -124,7 +124,7 @@ metalsmith( __dirname )
 
     .use( function ( files, metalsmith, done ) {
         // Manual clean to preserve .git and _metalsmith
-        exec( "find .. -maxdepth 1 -not \\( -name '_*' -o -name '.*' \\) -exec rm -r {} \\;", function ( error, stdout, stderr ) {
+        exec( "find .. -maxdepth 1 -not \\( -name 'CNAME' -o -name '_*' -o -name '.*' \\) -exec rm -r {} \\;", function ( error, stdout, stderr ) {
             done( );
         } );
     } )
