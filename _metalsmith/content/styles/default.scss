@@ -1,0 +1,92 @@
+body {
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+
+@media (max-width: 979px) {
+    body {
+        padding-top: 0;
+    }
+}
+
+@import "_bootswatch.scss";
+@import "_article.scss";
+@import "_syntax.scss";
+
+.show {
+    margin-bottom: 100px;
+
+    padding: 30px 0;
+
+    background: #327999;
+    background-image: linear-gradient(to bottom, #829DD6 0, #187C7B 100%);
+
+    .container {
+        display: flex;
+    }
+
+    .logo {
+        flex: auto;
+    }
+
+    .example {
+        display: block;
+        flex: none;
+
+        width: 33%;
+
+        border: 10px solid #000000;
+        border-radius: 20px;
+
+        background: #FFFFFF;
+    }
+}
+
+.impact {
+    text-align: center;
+
+    color: #555555;
+
+    .lead {
+        margin: auto;
+
+        max-width: 80%;
+
+        font-size: 21px;
+    }
+}
+
+.mini-rule {
+    margin: 50px auto;
+
+    width: 100px;
+}
+
+.advantages {
+    text-align: center;
+
+    .glyphicon {
+        display: block;
+
+        margin-bottom: 50px;
+
+        font-size: 7rem;
+        text-align: center;
+
+        color: #CFD1DD;
+
+        transition: color .3s;
+    }
+
+    .opensource:hover .glyphicon {
+        color: #405ABE;
+    }
+
+    .modular:hover .glyphicon {
+        color: #CA85CD;
+    }
+
+    .fast:hover .glyphicon {
+        color: #FFDD5C;
+    }
+}

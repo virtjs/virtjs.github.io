@@ -1,0 +1,287 @@
+<!doctype html>
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+        <title>Virt.js</title>
+
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.2.0+1/simplex/bootstrap.min.css" />
+        <link rel="stylesheet" href="/styles/default.css" />
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/dropdown.min.js"></script>
+
+    </head>
+
+    <body>
+
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <ul class="nav navbar-nav">
+
+                    <li><a class="navbar-brand" href="/">
+                        Virt.js
+                    </a></li>
+
+                    
+                    
+
+    
+
+        
+
+            <li>
+                <a href="/">
+                    About
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/news/">
+                    News
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/examples/">
+                    Examples
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" id="documentation" href="#">
+                    Documentation <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="documentation">
+                    
+
+    
+
+        
+
+            <li>
+                <a href="/documentation/getting-started/">
+                    Getting Started
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/documentation/instanciating-an-emulator/">
+                    Instanciating an Emulator
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/documentation/standard-devices/">
+                    Standard Devices
+                </a>
+            </li>
+
+        
+
+    
+
+
+                </ul>
+            </li>
+
+        
+
+    
+
+        
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" id="developers" href="#">
+                    Developers <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="developers">
+                    
+
+    
+
+        
+
+            <li>
+                <a href="/developers/writing-an-engine/">
+                    Writing an Engine
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/developers/implementing-a-device/">
+                    Implementing a Device
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/developers/extra-events/">
+                    Extra Events
+                </a>
+            </li>
+
+        
+
+    
+
+
+                </ul>
+            </li>
+
+        
+
+    
+
+        
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" id="more" href="#">
+                    More <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="more">
+                    
+
+    
+
+        
+
+            <li>
+                <a href="/more#contact">
+                    Contact
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/more#legal">
+                    Legal
+                </a>
+            </li>
+
+        
+
+    
+
+
+                </ul>
+            </li>
+
+        
+
+    
+
+
+
+                </ul>
+            </div>
+        </nav>
+
+        
+
+    <div class="container">
+        <div class="row">
+
+            <article class="col-md-8">
+                <div class="page-header"><h1 id="extra-events">Extra Events</h1></div><p>In some cases, you may want to hook some parts of the engine while it&#39;s running. In most emulators, such a thing can be very difficult since they are not really made for being extended at runtime. Virt.js is different, and allows you to choose between performances and extensibility by exposing events. All of them are totally optionals, and will be disabled if you do not explicitely ask for them when instanciating your engine.</p>
+<h2 id="usage">Usage</h2><p><code>js</code></p>
+<h2 id="event-list">Event list</h2><p>Here is the list of the events for standard engines (each engine expose its own events, even if most of them share the same names and parameters).</p>
+<h3 id="gameboy">Gameboy</h3><ul>
+<li><p><code>setup { }</code> (available on <code>engine</code> with the <code>setup</code> namespace)</p>
+<p>Emitted after an environment is bound to an engine.</p>
+</li>
+<li><p><code>read { address, value }</code> (available on <code>engine.mmu</code> with the <code>read</code> namespace)</p>
+<p>Emitted when the emulator wants to know the data at some place in the memory.</p>
+<p>Note that <code>value</code> is writable: you can set it to something else than <code>undefined</code>, and the emulator will return this value rather than the actual one.</p>
+</li>
+<li><p><code>write { address, value }</code> (available on <code>engine.mmu</code> with the <code>write</code> namespace)</p>
+<p>Emitted right before writing something somewhere.</p>
+<p>Note that <code>value</code> is writable: you can set it to something else, and the emulator will return this value rather than the actual one.</p>
+</li>
+<li><p><code>post-write { address, value }</code> (available on <code>engine.mmu</code> with the <code>write</code> namespace)</p>
+<p>Emitted right after writing something somewhere.</p>
+<p>Changing the <code>value</code> parameter is not possible anymore.</p>
+</li>
+</ul>
+
+            </article>
+
+            <nav class="col-md-4">
+                <div class="list-group article-navigation">
+                    
+                        
+                            <a class="list-group-item" href="/developers/writing-an-engine/">
+                                Writing an Engine
+                            </a>
+                        
+                    
+                        
+                            <a class="list-group-item" href="/developers/implementing-a-device/">
+                                Implementing a Device
+                            </a>
+                        
+                    
+                        
+                            <a class="list-group-item active" href="/developers/extra-events/">
+                                Extra Events
+                            </a>
+                        
+                    
+                </div>
+            </nav>
+
+        </div>
+    </div>
+
+
+
+    </body>
+
+</html>

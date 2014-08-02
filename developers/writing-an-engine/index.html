@@ -1,0 +1,362 @@
+<!doctype html>
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+        <title>Virt.js</title>
+
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.2.0+1/simplex/bootstrap.min.css" />
+        <link rel="stylesheet" href="/styles/default.css" />
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/dropdown.min.js"></script>
+
+    </head>
+
+    <body>
+
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <ul class="nav navbar-nav">
+
+                    <li><a class="navbar-brand" href="/">
+                        Virt.js
+                    </a></li>
+
+                    
+                    
+
+    
+
+        
+
+            <li>
+                <a href="/">
+                    About
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/news/">
+                    News
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/examples/">
+                    Examples
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" id="documentation" href="#">
+                    Documentation <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="documentation">
+                    
+
+    
+
+        
+
+            <li>
+                <a href="/documentation/getting-started/">
+                    Getting Started
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/documentation/instanciating-an-emulator/">
+                    Instanciating an Emulator
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/documentation/standard-devices/">
+                    Standard Devices
+                </a>
+            </li>
+
+        
+
+    
+
+
+                </ul>
+            </li>
+
+        
+
+    
+
+        
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" id="developers" href="#">
+                    Developers <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="developers">
+                    
+
+    
+
+        
+
+            <li>
+                <a href="/developers/writing-an-engine/">
+                    Writing an Engine
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/developers/implementing-a-device/">
+                    Implementing a Device
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/developers/extra-events/">
+                    Extra Events
+                </a>
+            </li>
+
+        
+
+    
+
+
+                </ul>
+            </li>
+
+        
+
+    
+
+        
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" id="more" href="#">
+                    More <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="more">
+                    
+
+    
+
+        
+
+            <li>
+                <a href="/more#contact">
+                    Contact
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/more#legal">
+                    Legal
+                </a>
+            </li>
+
+        
+
+    
+
+
+                </ul>
+            </li>
+
+        
+
+    
+
+
+
+                </ul>
+            </div>
+        </nav>
+
+        
+
+    <div class="container">
+        <div class="row">
+
+            <article class="col-md-8">
+                <div class="page-header"><h1 id="writing-an-engine">Writing an Engine</h1></div><p>Creating an emulator is as simple as creating a few classes. Let&#39;s see what Virt.js can do for you!</p>
+<p>In this tutorial, we will create an engine for the brainfuck language.</p>
+<h2 id="instruction-set">Instruction Set</h2><p>If you&#39;ve never heard about it before, the brainfuck is an esotheric language whose particularity is to contain only six instructions (in the following array, <code>*P</code> means <em>&quot;The data located at <code>P</code>&quot;</em>).</p>
+<table class="table"><thead><tr>
+<th>Character</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody><tr>
+<td><strong>&gt;</strong></td>
+<td>Increase <code>P</code></td>
+</tr>
+<tr>
+<td><strong>&lt;</strong></td>
+<td>Decrease <code>P</code></td>
+</tr>
+<tr>
+<td><strong>+</strong></td>
+<td>Increase <code>*P</code></td>
+</tr>
+<tr>
+<td><strong>-</strong></td>
+<td>Decrease <code>*P</code></td>
+</tr>
+<tr>
+<td><strong>[</strong></td>
+<td>Push the current address in the address stack, enter sleep mode if <code>*P</code> is zero</td>
+</tr>
+<tr>
+<td><strong>]</strong></td>
+<td>Pop the top of the address stack, exit sleep mode if the stack is empty, jump to the stack address if <code>*P</code> is zero</td>
+</tr>
+</tbody></table><p>Usually, the <code>[</code> and <code>]</code> instructions are paired. We will proceed a bit differently in our engine: pairing these instructions means doing a bit of parsing, and we don&#39;t want to do it (since it&#39;s not really in the scope of this course). To avoid it, we will keep an extra stack of address:</p>
+<ul>
+<li>Each time we see a <code>[</code> instruction, we will push it into this stack. Then, if we&#39;re not in sleep mode, we will check the value of <code>*P</code>. If it&#39;s zero, we will enter into sleep mode. Otherwise, nothing happen.</li>
+<li>Each time we see a <code>]</code> instruction, we will pop the stack top value. If it empties the stack, we exit the sleep mode. Then, if we&#39;re not in sleep mode anymore, we check the value of <code>*P</code>. If it&#39;s not zero, we go back to the poped address.</li>
+</ul>
+<h2 id="the-engine">The engine</h2><p>So, as we say, an engine is a simple Javascript class (yep, ES6 has classes!). Let&#39;s write its public interface, even unimplemented:</p>
+<pre><code><span class="line"><span class="token keyword" >export</span> <span class="token keyword" >class</span> <span class="token class-name" >Engine</span> <span class="token punctuation" >{</span></span><span class="line"></span><span class="line">    <span class="token function" >setup<span class="token punctuation" >(</span></span> environment <span class="token punctuation" >)</span> <span class="token punctuation" >{</span></span><span class="line">    <span class="token punctuation" >}</span></span><span class="line"></span><span class="line">    <span class="token function" >loadArrayBuffer<span class="token punctuation" >(</span></span> environment<span class="token punctuation" >,</span> options <span class="token operator" >=</span> <span class="token punctuation" >{</span> <span class="token punctuation" >}</span> <span class="token punctuation" >)</span> <span class="token punctuation" >{</span></span><span class="line">    <span class="token punctuation" >}</span></span><span class="line"></span><span class="line">    <span class="token function" >run<span class="token punctuation" >(</span></span> <span class="token punctuation" >)</span> <span class="token punctuation" >{</span></span><span class="line">    <span class="token punctuation" >}</span></span><span class="line"></span><span class="line"><span class="token punctuation" >}</span></span></code></pre><p>These three methods, <code>setup</code>, <code>loadArrayBuffer</code> and <code>run</code> are used in most engines in order to give users some consistency. The <code>loadArrayBuffer</code> creates a new environment, and passes it to <code>setup</code> in order to plug it into the engine. Once everything is ready, the <code>run</code> method is called, and everything can happen.</p>
+<p>So, with these rules in mind, let&#39;s fill the methods:</p>
+<pre><code><span class="line"><span class="token keyword" >export</span> <span class="token keyword" >class</span> <span class="token class-name" >Engine</span> <span class="token punctuation" >{</span></span><span class="line"></span><span class="line">    <span class="token function" >setup<span class="token punctuation" >(</span></span> environment <span class="token punctuation" >)</span> <span class="token punctuation" >{</span></span><span class="line"></span><span class="line">        <span class="token keyword" >this</span><span class="token punctuation" >.</span>_environment <span class="token operator" >=</span> environment<span class="token punctuation" >;</span></span><span class="line"></span><span class="line">    <span class="token punctuation" >}</span></span><span class="line"></span><span class="line">    <span class="token function" >loadArrayBuffer<span class="token punctuation" >(</span></span> programBuffer<span class="token punctuation" >,</span> <span class="token punctuation" >{</span> autostart <span class="token punctuation" >}</span> <span class="token operator" >=</span> <span class="token punctuation" >{</span> <span class="token punctuation" >}</span> <span class="token punctuation" >)</span> <span class="token punctuation" >{</span></span><span class="line"></span><span class="line">        <span class="token keyword" >this</span><span class="token punctuation" >.</span><span class="token function" >setup<span class="token punctuation" >(</span></span> <span class="token keyword" >new</span> <span class="token class-name" >Environment</span><span class="token punctuation" >(</span> <span class="token punctuation" >{</span></span><span class="line">            programBuffer <span class="token punctuation" >:</span> arrayBuffer</span><span class="line">        <span class="token punctuation" >}</span> <span class="token punctuation" >)</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line">        <span class="token keyword" >if</span> <span class="token punctuation" >(</span> autostart <span class="token punctuation" >)</span> <span class="token punctuation" >{</span></span><span class="line">            <span class="token keyword" >return</span> <span class="token keyword" >this</span><span class="token punctuation" >.</span><span class="token function" >run<span class="token punctuation" >(</span></span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line">        <span class="token punctuation" >}</span></span><span class="line"></span><span class="line">    <span class="token punctuation" >}</span></span><span class="line"></span><span class="line">    <span class="token function" >run<span class="token punctuation" >(</span></span> <span class="token punctuation" >)</span> <span class="token punctuation" >{</span></span><span class="line"></span><span class="line">        <span class="token keyword" >return</span> <span class="token keyword" >this</span><span class="token punctuation" >.</span>_environment<span class="token punctuation" >.</span>out<span class="token punctuation" >;</span></span><span class="line"></span><span class="line">    <span class="token punctuation" >}</span></span><span class="line"></span><span class="line"><span class="token punctuation" >}</span></span></code></pre><p>Yeah! We have an engine! Which doesn&#39;t do anything!</p>
+<h2 id="the-environment">The environment</h2><p>When emulating a system, you will want to store the current emulator state somewhere. This place is called an <em>environment</em>, and is a simple instance of a class. For our brainfuck engine, we will only need a very basic environment:</p>
+<pre><code><span class="line"><span class="token keyword" >export</span> <span class="token keyword" >class</span> <span class="token class-name" >Environment</span> <span class="token punctuation" >{</span></span><span class="line"></span><span class="line">    <span class="token keyword" >constructor</span><span class="token punctuation" >(</span> <span class="token punctuation" >{</span> programBuffer <span class="token punctuation" >}</span> <span class="token punctuation" >)</span> <span class="token punctuation" >{</span></span><span class="line"></span><span class="line">       <span class="token comment" spellcheck="true"> // Creates a new uint8 buffer view</span></span><span class="line">        <span class="token keyword" >this</span><span class="token punctuation" >.</span>program <span class="token operator" >=</span> <span class="token keyword" >new</span> <span class="token class-name" >Uint8Array</span><span class="token punctuation" >(</span> programBuffer <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line">       <span class="token comment" spellcheck="true"> // Creates the data array (16kb)</span></span><span class="line">        <span class="token keyword" >this</span><span class="token punctuation" >.</span>data <span class="token operator" >=</span> <span class="token keyword" >new</span> <span class="token class-name" >Uint8Array</span><span class="token punctuation" >(</span> <span class="token number" >16</span> <span class="token operator" >*</span> <span class="token number" >1024</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line">       <span class="token comment" spellcheck="true"> // Contains any output</span></span><span class="line">        <span class="token keyword" >this</span><span class="token punctuation" >.</span>out <span class="token operator" >=</span> <span class="token string" >''</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line">    <span class="token punctuation" >}</span></span><span class="line"></span><span class="line"><span class="token punctuation" >}</span></span></code></pre><p>Nothing more for now. See? Isn&#39;t it simple?</p>
+<h2 id="the-jit">The JIT</h2><p>We&#39;re finally attacking the hard work!</p>
+<p>An emulator may be designed from multiple ways:</p>
+<ul>
+<li><strong>An interpreter</strong> would read every operation from the emulated program, and execute some code to emulate this instruction behavior. It&#39;s pretty simple (basically, it&#39;s just a <code>for</code> loop followed by <code>switch</code> clauses), but not especially efficient.</li>
+<li><strong>A recompiler</strong> will, as implied, recompile the original program in order to convert all the emulated machine primitives into the host environment primitives. For example, an asm-like <code>add a, b</code> instruction would become <code>a + b</code> in Javascript. Since the recompiled code is native, it can be run much faster, avoiding expensive indirections. However, it involves a long startup time, and may be impossible in some cases (for example with self-modifying codes).</li>
+<li><strong>A JIT</strong> is a bit like the recompiler approach, but with different advantages and inconvenients. The JIT will recompile part of the original program, but only when needed. It avoids the burden of having to compile the full program, and allows to recompile some parts of the code if they happen to change during the execution, but requires some additional runtime code to do its magic.</li>
+</ul>
+<p>Nevertheless, JIT engines offer many advantages over the two other approaches, and most of Virt.js engines will use them. And guess what? That&#39;s a good news! Since they are so powerful, the Virt.js core contains a ready-to-use JIT compilation strategy. You can use it to bootstrap your engine without hassle. Let&#39;s dig it.</p>
+<pre><code><span class="line"><span class="token keyword" >import</span> <span class="token punctuation" >{</span> JIT <span class="token punctuation" >}</span> <span class="token keyword" >from</span> <span class="token string" >'virtjs/core/JIT'</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line"><span class="token keyword" >var</span> compiler<span class="token punctuation" >;</span>    <span class="token comment" spellcheck="true">/* we'll get to that later :) */</span></span><span class="line"><span class="token keyword" >var</span> environment<span class="token punctuation" >;</span> <span class="token comment" spellcheck="true">/* 'environment' is just an instance of your class Environment */</span></span><span class="line"></span><span class="line"><span class="token keyword" >var</span> jit <span class="token operator" >=</span> <span class="token keyword" >new</span> <span class="token class-name" >JIT</span><span class="token punctuation" >(</span> compiler<span class="token punctuation" >,</span> environment <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line">jit<span class="token punctuation" >.</span><span class="token function" >continue<span class="token punctuation" >(</span></span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span></code></pre><p>That&#39;s possibly everything you need to know about the JIT structure. Cross my heart. It takes two parameters at construction:</p>
+<ul>
+<li>A <strong>compiler</strong>, which is an instance of a special type of class that we will detail in the following part.</li>
+<li>An <strong>environment</strong>, which is nothing more than an instance of the class that be defined in the previous chapter. Easy, right?</li>
+</ul>
+<p>When calling the <code>continue</code> method, the JIT will run until being stopped by the program (which, in our case, will happen at the end of the execution).</p>
+<p>So, let&#39;s plug it into our engine:</p>
+<pre><code><span class="line"><span class="token keyword" >export</span> <span class="token keyword" >class</span> <span class="token class-name" >Engine</span> <span class="token punctuation" >{</span></span><span class="line"></span><span class="line">    <span class="token function" >setup<span class="token punctuation" >(</span></span> environment <span class="token punctuation" >)</span> <span class="token punctuation" >{</span></span><span class="line"></span><span class="line">        <span class="token keyword" >var</span> compiler<span class="token punctuation" >;</span> <span class="token comment" spellcheck="true">/* next chapter! */</span></span><span class="line"></span><span class="line">        <span class="token keyword" >this</span><span class="token punctuation" >.</span>_environment <span class="token operator" >=</span> environment<span class="token punctuation" >;</span></span><span class="line">        <span class="token keyword" >this</span><span class="token punctuation" >.</span>_jit <span class="token operator" >=</span> <span class="token keyword" >new</span> <span class="token class-name" >JIT</span><span class="token punctuation" >(</span> compiler<span class="token punctuation" >,</span> environment <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line">    <span class="token punctuation" >}</span></span><span class="line"></span><span class="line">    <span class="token function" >loadArrayBuffer<span class="token punctuation" >(</span></span> programBuffer<span class="token punctuation" >,</span> <span class="token punctuation" >{</span> autostart <span class="token punctuation" >}</span> <span class="token operator" >=</span> <span class="token punctuation" >{</span> <span class="token punctuation" >}</span> <span class="token punctuation" >)</span> <span class="token punctuation" >{</span></span><span class="line"></span><span class="line">        <span class="token keyword" >this</span><span class="token punctuation" >.</span><span class="token function" >setup<span class="token punctuation" >(</span></span> <span class="token keyword" >new</span> <span class="token class-name" >Environment</span><span class="token punctuation" >(</span> <span class="token punctuation" >{</span></span><span class="line">            programBuffer <span class="token punctuation" >:</span> arrayBuffer</span><span class="line">        <span class="token punctuation" >}</span> <span class="token punctuation" >)</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line">        <span class="token keyword" >if</span> <span class="token punctuation" >(</span> autostart <span class="token punctuation" >)</span> <span class="token punctuation" >{</span></span><span class="line">            <span class="token keyword" >return</span> <span class="token keyword" >this</span><span class="token punctuation" >.</span><span class="token function" >run<span class="token punctuation" >(</span></span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line">        <span class="token punctuation" >}</span></span><span class="line"></span><span class="line">    <span class="token punctuation" >}</span></span><span class="line"></span><span class="line">    <span class="token function" >run<span class="token punctuation" >(</span></span> <span class="token punctuation" >)</span> <span class="token punctuation" >{</span></span><span class="line"></span><span class="line">        <span class="token keyword" >this</span><span class="token punctuation" >.</span>_jit<span class="token punctuation" >.</span><span class="token function" >continue<span class="token punctuation" >(</span></span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line">        <span class="token keyword" >return</span> <span class="token keyword" >this</span><span class="token punctuation" >.</span>_environment<span class="token punctuation" >.</span>out<span class="token punctuation" >;</span></span><span class="line"></span><span class="line">    <span class="token punctuation" >}</span></span><span class="line"></span><span class="line"><span class="token punctuation" >}</span></span></code></pre><h2 id="the-compiler">The compiler</h2><p>Remember this variable called <code>compiler</code>? It&#39;s another class instance. See, in order to live-compile the emulated bytecode into regular Javascript, the JIT engine has to know how to proceed. That&#39;s what the compiler is for.</p>
+<p>Just like other classes, a compiler is a simple Javascript class, but this time we have to implement some non-optional methods. Let&#39;s start with empty functions:</p>
+<pre><code><span class="line"><span class="token keyword" >class</span> <span class="token class-name" >Compiler</span> <span class="token punctuation" >{</span></span><span class="line"></span><span class="line">    <span class="token function" >compileFrom<span class="token punctuation" >(</span></span> base<span class="token punctuation" >,</span> limit <span class="token punctuation" >)</span> <span class="token punctuation" >{</span></span><span class="line">        <span class="token keyword" >return</span> <span class="token keyword" >function</span> <span class="token punctuation" >(</span> jit<span class="token punctuation" >,</span> environment <span class="token punctuation" >)</span> <span class="token punctuation" >{</span></span><span class="line">            <span class="token comment" spellcheck="true">/* something something */</span></span><span class="line">        <span class="token punctuation" >}</span><span class="token punctuation" >;</span></span><span class="line">    <span class="token punctuation" >}</span></span><span class="line"></span><span class="line">    <span class="token function" >disassembleAt<span class="token punctuation" >(</span></span> address <span class="token punctuation" >)</span> <span class="token punctuation" >{</span></span><span class="line">        <span class="token keyword" >return</span> <span class="token string" >'&lt;not implemented>'</span><span class="token punctuation" >;</span></span><span class="line">    <span class="token punctuation" >}</span></span><span class="line"></span><span class="line"><span class="token punctuation" >}</span></span></code></pre><p>So, a compiler contains two methods:</p>
+<ul>
+<li><p><code>compileFrom</code> is the main one. It is used to transform emulated bytecode into a Javascript function (we&#39;ll see how to do it later). The <code>base</code> parameter is the start address, and the <code>limit</code> is the maximal read size. Actually, you may want to read more than this amount if your instructions take more than a single byte. The point is, stop reading instructions as soon as possible when you hit the limit.</p>
+<p>The last thing we should talk about this function is its return type. As you can see, we actually return another function. This later function will be executing by the JIT engine any time it would have to execute the code located at the <code>base</code> address, and will pass it two parameters: the JIT class instance itself, and the environment that you put in the JIT instanciation parameters.</p>
+</li>
+<li><p><code>disassembleAt</code> is very simple: it takes an address, and returns the textual representation of the instruction. It is actually not required strictly speaking (since it would hurt performances to do so), but it&#39;s usually a useful thing to have, and some devices or program may like it (for example the Virt.js debugger).</p>
+</li>
+</ul>
+<p>So, with these informations, we can start implementing our compiler:</p>
+<pre><code><span class="line"><span class="token keyword" >class</span> <span class="token class-name" >Compiler</span> <span class="token punctuation" >{</span></span><span class="line"></span><span class="line">    <span class="token keyword" >constructor</span><span class="token punctuation" >(</span> <span class="token punctuation" >{</span> environment <span class="token punctuation" >}</span> <span class="token punctuation" >)</span> <span class="token punctuation" >{</span></span><span class="line"></span><span class="line">        <span class="token keyword" >this</span><span class="token punctuation" >.</span>_environment <span class="token operator" >=</span> environment<span class="token punctuation" >;</span></span><span class="line"></span><span class="line">    <span class="token punctuation" >}</span></span><span class="line"></span><span class="line">    <span class="token function" >compileFrom<span class="token punctuation" >(</span></span> base<span class="token punctuation" >,</span> limit <span class="token punctuation" >)</span> <span class="token punctuation" >{</span></span><span class="line"></span><span class="line">        <span class="token keyword" >var</span> code <span class="token operator" >=</span> <span class="token string" >''</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line">        <span class="token keyword" >var</span> pCell <span class="token operator" >=</span> <span class="token template" >`env.data[ env.p % env.data.length ]`</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line">        <span class="token keyword" >for</span> <span class="token punctuation" >(</span> <span class="token keyword" >var</span> offset <span class="token operator" >=</span> <span class="token number" >0</span><span class="token punctuation" >;</span> offset <span class="token operator" >&lt;</span> limit<span class="token punctuation" >;</span> <span class="token operator" >++</span> limit <span class="token punctuation" >)</span> <span class="token punctuation" >{</span></span><span class="line"></span><span class="line">            <span class="token keyword" >var</span> address <span class="token operator" >=</span> base <span class="token operator" >+</span> offset<span class="token punctuation" >;</span></span><span class="line"></span><span class="line">            <span class="token keyword" >if</span> <span class="token punctuation" >(</span> address <span class="token operator" >>=</span> <span class="token keyword" >this</span><span class="token punctuation" >.</span>_environment<span class="token punctuation" >.</span>program<span class="token punctuation" >.</span>length <span class="token punctuation" >)</span></span><span class="line">                <span class="token keyword" >break</span> <span class="token punctuation" >;</span></span><span class="line"></span><span class="line">            <span class="token keyword" >var</span> instruction <span class="token operator" >=</span> <span class="token keyword" >this</span><span class="token punctuation" >.</span>_environment<span class="token punctuation" >.</span>program<span class="token punctuation" >[</span> address <span class="token punctuation" >]</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line">            <span class="token keyword" >switch</span> <span class="token punctuation" >(</span> String<span class="token punctuation" >.</span><span class="token function" >fromCharCode<span class="token punctuation" >(</span></span> instruction <span class="token punctuation" >)</span> <span class="token punctuation" >)</span> <span class="token punctuation" >{</span></span><span class="line"></span><span class="line">                <span class="token keyword" >case</span> <span class="token string" >'>'</span> <span class="token punctuation" >:</span> code <span class="token operator" >+</span><span class="token operator" >=</span> <span class="token template" >`if ( ! env.sleep ) env.p += 1;`</span><span class="token punctuation" >;</span> <span class="token keyword" >break</span> <span class="token punctuation" >;</span></span><span class="line">                <span class="token keyword" >case</span> <span class="token string" >'&lt;'</span> <span class="token punctuation" >:</span> code <span class="token operator" >+</span><span class="token operator" >=</span> <span class="token template" >`if ( ! env.sleep ) env.p -= 1;`</span><span class="token punctuation" >;</span> <span class="token keyword" >break</span> <span class="token punctuation" >;</span></span><span class="line"></span><span class="line">                <span class="token keyword" >case</span> <span class="token string" >'+'</span> <span class="token punctuation" >:</span> code <span class="token operator" >+</span><span class="token operator" >=</span> <span class="token template" >`if ( ! env.sleep ) <span class="token interpolate" >${pCell}</span> += 1;`</span><span class="token punctuation" >;</span> <span class="token keyword" >break</span> <span class="token punctuation" >;</span></span><span class="line">                <span class="token keyword" >case</span> <span class="token string" >'-'</span> <span class="token punctuation" >:</span> code <span class="token operator" >+</span><span class="token operator" >=</span> <span class="token template" >`if ( ! env.sleep ) <span class="token interpolate" >${pCell}</span> -= 1;`</span><span class="token punctuation" >;</span> <span class="token keyword" >break</span> <span class="token punctuation" >;</span></span><span class="line"></span><span class="line">                <span class="token keyword" >case</span> <span class="token string" >'['</span> <span class="token punctuation" >:</span> code <span class="token operator" >+</span><span class="token operator" >=</span> <span class="token template" >`</span></span><span class="line"><span class="token template" >                    env.stack.push( <span class="token interpolate" >${address}</span> );</span></span><span class="line"><span class="token template" >                    if ( <span class="token interpolate" >${pCell}</span> === 0 ) env.sleep = true;</span></span><span class="line"><span class="token template" >                `</span><span class="token punctuation" >;</span> <span class="token keyword" >break</span> <span class="token punctuation" >;</span></span><span class="line"></span><span class="line">                <span class="token keyword" >case</span> <span class="token string" >']'</span> <span class="token punctuation" >:</span> code <span class="token operator" >+</span><span class="token operator" >=</span> <span class="token template" >`</span></span><span class="line"><span class="token template" >                    var tmp = env.stack.pop( );</span></span><span class="line"><span class="token template" >                    if ( env.stack.length === 0 ) env.sleep = false;</span></span><span class="line"><span class="token template" >                    if ( ! env.sleep &amp;&amp; <span class="token interpolate" >${pCell}</span> !== 0 ) return tmp;</span></span><span class="line"><span class="token template" >                `</span><span class="token punctuation" >;</span> <span class="token keyword" >break</span> <span class="token punctuation" >;</span></span><span class="line"></span><span class="line">            <span class="token punctuation" >}</span></span><span class="line"></span><span class="line">        <span class="token punctuation" >}</span></span><span class="line"></span><span class="line">        <span class="token keyword" >if</span> <span class="token punctuation" >(</span> address <span class="token operator" >>=</span> <span class="token keyword" >this</span><span class="token punctuation" >.</span>_environment<span class="token punctuation" >.</span>program<span class="token punctuation" >.</span>length <span class="token punctuation" >)</span> <span class="token punctuation" >{</span></span><span class="line">            code <span class="token operator" >+</span><span class="token operator" >=</span> <span class="token template" >`jit.stop( ); return 0;`</span><span class="token punctuation" >;</span></span><span class="line">        <span class="token punctuation" >}</span> <span class="token keyword" >else</span> <span class="token punctuation" >{</span></span><span class="line">            code <span class="token operator" >+</span><span class="token operator" >=</span> <span class="token template" >`return <span class="token interpolate" >${address}</span>;`</span><span class="token punctuation" >;</span></span><span class="line">        <span class="token punctuation" >}</span></span><span class="line"></span><span class="line">        <span class="token keyword" >return</span> <span class="token keyword" >new</span> <span class="token class-name" >Function</span><span class="token punctuation" >(</span> <span class="token string" >'jit, environment'</span><span class="token punctuation" >,</span> code <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line">    <span class="token punctuation" >}</span></span><span class="line"></span><span class="line">    <span class="token function" >disassembleAt<span class="token punctuation" >(</span></span> address <span class="token punctuation" >)</span> <span class="token punctuation" >{</span></span><span class="line"></span><span class="line">        <span class="token keyword" >return</span> String<span class="token punctuation" >.</span><span class="token function" >fromCharCode<span class="token punctuation" >(</span></span> <span class="token keyword" >this</span><span class="token punctuation" >.</span>_environment<span class="token punctuation" >.</span>program<span class="token punctuation" >[</span> address <span class="token punctuation" >]</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line">    <span class="token punctuation" >}</span></span><span class="line"></span><span class="line"><span class="token punctuation" >}</span></span></code></pre><p>A lot of things are going on, here! Let&#39;s detail them:</p>
+<ul>
+<li><p>First, we declare our <code>code</code> variable. It&#39;s what will contain the final compiled Javascript code.</p>
+</li>
+<li><p>Then we create an helper to access the data pointed by the <code>P</code> variable (since the code is a bit long, it makes sense to factorize it). By the way, notice how we&#39;re using ES6 template literals here! That&#39;s not extra-useful in this particular case, but a few other strings make a great use of the builtin interpolation.</p>
+</li>
+<li><p>We iterate on each instruction that we want to compile (the JIT will be telling us how many instructions we should compile at most)</p>
+<ul>
+<li><p>If the instruction is out-of-bound (ie. if we reached the end of the program), we abort the process immediately</p>
+</li>
+<li><p>Otherwise, we craft the right code matching the instruction</p>
+<ul>
+<li><p>Notice that we&#39;re using <code>env.p</code>, <code>env.data</code>, <code>env.sleep</code> and <code>env.stack</code>. All of those variables have been previously declared in our Environment class!</p>
+</li>
+<li><p>If you pay attention, you will see an odd thing : the <code>]</code> instruction may return! Actually, when the compiled function is run by the JIT engine, any returned value will be immediately jumped at. It&#39;s very handy to chain the execution of multiple code paths.</p>
+<p>If you do not wish to immediately continue the execution, you may pause the JIT execution by calling <code>jit.stop( )</code> then returning an address from which the execution will resume later (usually, the next instruction address).</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>If we are the end of the program, we append some code to quit the JIT executon. In other cases, we add a jump toward the next part of the program.</p>
+</li>
+<li><p>And finally, we actually create the function from it&#39;s body (by using the dreaded <code>Function</code> constructor) and return it.</p>
+</li>
+</ul>
+<p>I wouldn&#39;t mind you not understanding some points, so feel free to breath a bit and read again (by the way, this tutorial is far from perfect, so I would love to hear your thoughts about how to improve it! But back to the point.).</p>
+
+            </article>
+
+            <nav class="col-md-4">
+                <div class="list-group article-navigation">
+                    
+                        
+                            <a class="list-group-item active" href="/developers/writing-an-engine/">
+                                Writing an Engine
+                            </a>
+                        
+                    
+                        
+                            <a class="list-group-item" href="/developers/implementing-a-device/">
+                                Implementing a Device
+                            </a>
+                        
+                    
+                        
+                            <a class="list-group-item" href="/developers/extra-events/">
+                                Extra Events
+                            </a>
+                        
+                    
+                </div>
+            </nav>
+
+        </div>
+    </div>
+
+
+
+    </body>
+
+</html>

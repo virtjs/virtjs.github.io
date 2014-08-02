@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "libyaml": "^0.2.4",
+    "marked": "^0.3.2",
+    "metalsmith": "^0.9.0",
+    "metalsmith-watch": "^0.1.1",
+    "node-sass": "^0.9.3",
+    "nunjucks": "^1.0.5",
+    "prismjs": "LeaVerou/prism#gh-pages"
+  }
+}

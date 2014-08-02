@@ -1,0 +1,28 @@
+{% macro navigation_menu(navigation) %}
+
+    {% for title, target in navigation %}
+
+        {% if target | is_iterable %}
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" id="{{ title | slugify }}" href="#">
+                    {{ title }} <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="{{ title | slugify }}">
+                    {{ navigation_menu(target) }}
+                </ul>
+            </li>
+
+        {% else %}
+
+            <li>
+                <a href="{{ target }}">
+                    {{ title }}
+                </a>
+            </li>
+
+        {% endif %}
+
+    {% endfor %}
+
+{% endmacro %}

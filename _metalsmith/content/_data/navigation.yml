@@ -1,0 +1,17 @@
+About:                         "/"
+News:                          "/news/"
+Examples:                      "/examples/"
+
+Documentation:
+    Getting Started:           "/documentation/getting-started/"
+    Instanciating an Emulator: "/documentation/instanciating-an-emulator/"
+    Standard Devices:          "/documentation/standard-devices/"
+
+Developers:
+    Writing an Engine:         "/developers/writing-an-engine/"
+    Implementing a Device:     "/developers/implementing-a-device/"
+    Extra Events:              "/developers/extra-events/"
+
+More:
+    Contact:                   "/more#contact"
+    Legal:                     "/more#legal"

@@ -1,0 +1,18 @@
+|
+    // By the way, this exact code is used for launching the emulator above :)
+
+    import { WebGLScreen }    from 'virtjs/devices/screens/WebGLScreen';
+    import { KeyboardInput }  from 'virtjs/devices/inputs/KeyboardInput';
+    import { fetch }          from 'virtjs/utilities/fetch';
+    import { Engine, inputs } from 'virtjs-gbjit/Engine';
+
+    var screen = new WebGLScreen( { element : document.querySelector( '#screen' ) } );
+    var input = new KeyboardInput( { inputs : inputs } );
+
+    var engine = new Engine( { devices : {
+        screen : screen,
+        input : input
+    } } );
+
+    var rom = fetch( '/roms/2048-sanqui.gb' );
+    engine.loadArrayBuffer( rom );

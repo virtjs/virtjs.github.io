@@ -1,0 +1,277 @@
+<!doctype html>
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+        <title>Virt.js</title>
+
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.2.0+1/simplex/bootstrap.min.css" />
+        <link rel="stylesheet" href="/styles/default.css" />
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/dropdown.min.js"></script>
+
+    </head>
+
+    <body>
+
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <ul class="nav navbar-nav">
+
+                    <li><a class="navbar-brand" href="/">
+                        Virt.js
+                    </a></li>
+
+                    
+                    
+
+    
+
+        
+
+            <li>
+                <a href="/">
+                    About
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/news/">
+                    News
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/examples/">
+                    Examples
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" id="documentation" href="#">
+                    Documentation <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="documentation">
+                    
+
+    
+
+        
+
+            <li>
+                <a href="/documentation/getting-started/">
+                    Getting Started
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/documentation/instanciating-an-emulator/">
+                    Instanciating an Emulator
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/documentation/standard-devices/">
+                    Standard Devices
+                </a>
+            </li>
+
+        
+
+    
+
+
+                </ul>
+            </li>
+
+        
+
+    
+
+        
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" id="developers" href="#">
+                    Developers <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="developers">
+                    
+
+    
+
+        
+
+            <li>
+                <a href="/developers/writing-an-engine/">
+                    Writing an Engine
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/developers/implementing-a-device/">
+                    Implementing a Device
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/developers/extra-events/">
+                    Extra Events
+                </a>
+            </li>
+
+        
+
+    
+
+
+                </ul>
+            </li>
+
+        
+
+    
+
+        
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" id="more" href="#">
+                    More <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="more">
+                    
+
+    
+
+        
+
+            <li>
+                <a href="/more#contact">
+                    Contact
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/more#legal">
+                    Legal
+                </a>
+            </li>
+
+        
+
+    
+
+
+                </ul>
+            </li>
+
+        
+
+    
+
+
+
+                </ul>
+            </div>
+        </nav>
+
+        
+
+    <div class="container">
+        <div class="row">
+
+            <article class="col-md-8">
+                <div class="page-header"><h1 id="getting-started">Getting Started</h1></div><p>Virt.js is a kind of oddball in this world full of Require.js and CommonJS: it actually stays true to its roots, and uses the full power of ES6. Rather than sacrifying time and sweat on build issues (as <a href="http://emberjs.com">Ember.js</a>, for example), it assumes that you are yourself using an ES6-compliant environment.</p>
+<p>At this point, you may be afraid by this requirement, but fear not my friends: in addition to being super-useful to any Javascript developer, large parts of the ES6 spec can also be emulated by any ES5 browser using the great Traceur library. Let&#39;s get to it.</p>
+<h2 id="traceur">Traceur</h2><p><a href="https://github.com/ModuleLoader/es6-module-loader">Traceur</a> is a Google-fueled project allowing to compile ES6 into ES5, runnable in most browsers. The best part? It&#39;s written into ES6, and is self-compiling! Its use may be a bit experimental, but I haven&#39;t noticed any critical bug on Virt.js, so I would say that you can use it without fear for other applications.</p>
+<p>Anyway, they have a weird build process, since you will have to install an npm package (or compile the library yourself) in order to get the required file. They don&#39;t have a ready-to-use web cdn, sadly.</p>
+<pre><code><span class="line">$<span class="token operator" >></span> cd <span class="token operator" >/</span>tmp</span><span class="line">$<span class="token operator" >></span> npm install traceur</span><span class="line">$<span class="token operator" >></span> cp node_modules<span class="token operator" >/</span>traceur<span class="token operator" >/</span>bin<span class="token operator" >/</span>traceur<span class="token punctuation" >.</span>js <span class="token string" >"/some/path"</span></span></code></pre><h2 id="es6-module-loader">ES6-Module-Loader</h2><p>Compiling ES6 is fine, but at some point we will need to load it. That what is <a href="https://github.com/ModuleLoader/es6-module-loader">ES6-Module-Loader</a> for. It will polyfills the ES6 global <code>System</code> variable, which is especially useful for its <code>System.import</code> method.</p>
+<p>To load this library, you just have to fetch the file from the Github repository:</p>
+<pre><code><span class="line">$<span class="token operator" >></span> wget <span class="token operator" >-</span>O<span class="token string" >"/some/path"</span> https<span class="token punctuation" >:</span><span class="token operator" >/</span><span class="token operator" >/</span>raw<span class="token punctuation" >.</span>githubusercontent<span class="token punctuation" >.</span>com<span class="token operator" >/</span>ModuleLoader<span class="token operator" >/</span>es6<span class="token operator" >-</span>module<span class="token operator" >-</span>loader<span class="token operator" >/</span>master<span class="token operator" >/</span>dist<span class="token operator" >/</span>es6<span class="token operator" >-</span>module<span class="token operator" >-</span>loader<span class="token punctuation" >.</span>min<span class="token punctuation" >.</span>js</span></code></pre><h2 id="systemjs">SystemJS</h2><p>ES6-Module-Loader allows to load any ES6 module in your browser (by dynamically using the Traceur compiler), but cannot load anything else. That&#39;s what <a href="https://github.com/systemjs/systemjs">SystemJS</a> is for. It implements AMD and CommonJS loader, and also a few very useful options such as <code>paths</code> or <code>map</code> (allowing to namespace your modules).</p>
+<p>Getting System.js is as simple as doing a simple curl:</p>
+<pre><code><span class="line">$<span class="token operator" >></span> wget <span class="token operator" >-</span>O<span class="token string" >"/some/path"</span> https<span class="token punctuation" >:</span><span class="token operator" >/</span><span class="token operator" >/</span>raw<span class="token punctuation" >.</span>githubusercontent<span class="token punctuation" >.</span>com<span class="token operator" >/</span>systemjs<span class="token operator" >/</span>systemjs<span class="token operator" >/</span>master<span class="token operator" >/</span>dist<span class="token operator" >/</span>system<span class="token punctuation" >.</span>min<span class="token punctuation" >.</span>js</span></code></pre><h2 id="including-those-vendors">Including those vendors</h2><p>Once you get these vendors, you just have to add them into your source code, in the right order:</p>
+<pre><code><span class="line"><span class="token operator" >&lt;</span>script src<span class="token operator" >=</span><span class="token string" >"traceur.js"</span><span class="token operator" >></span><span class="token operator" >&lt;</span><span class="token operator" >/</span>script<span class="token operator" >></span></span><span class="line"><span class="token operator" >&lt;</span>script src<span class="token operator" >=</span><span class="token string" >"es6-module-loader.min.js"</span><span class="token operator" >></span><span class="token operator" >&lt;</span><span class="token operator" >/</span>script<span class="token operator" >></span></span><span class="line"><span class="token operator" >&lt;</span>script src<span class="token operator" >=</span><span class="token string" >"system.min.js"</span><span class="token operator" >></span><span class="token operator" >&lt;</span><span class="token operator" >/</span>script<span class="token operator" >></span></span></code></pre><p>Congratulations, you&#39;re now running under a proper ES6 environment! For your information, Traceur can be run as a build step in order to convert your many ES6 modules into a single ES5 file. I will not detail how to do it here, because it is out of scope, but know that it is possible.</p>
+
+            </article>
+
+            <nav class="col-md-4">
+                <div class="list-group article-navigation">
+                    
+                        
+                            <a class="list-group-item active" href="/documentation/getting-started/">
+                                Getting Started
+                            </a>
+                        
+                    
+                        
+                            <a class="list-group-item" href="/documentation/instanciating-an-emulator/">
+                                Instanciating an Emulator
+                            </a>
+                        
+                    
+                        
+                            <a class="list-group-item" href="/documentation/standard-devices/">
+                                Standard Devices
+                            </a>
+                        
+                    
+                </div>
+            </nav>
+
+        </div>
+    </div>
+
+
+
+    </body>
+
+</html>

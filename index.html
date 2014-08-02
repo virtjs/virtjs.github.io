@@ -1,0 +1,276 @@
+<!doctype html>
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+        <title>Virt.js</title>
+
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.2.0+1/simplex/bootstrap.min.css" />
+        <link rel="stylesheet" href="/styles/default.css" />
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/dropdown.min.js"></script>
+
+    </head>
+
+    <body>
+
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <ul class="nav navbar-nav">
+
+                    <li><a class="navbar-brand" href="/">
+                        Virt.js
+                    </a></li>
+
+                    
+                    
+
+    
+
+        
+
+            <li>
+                <a href="/">
+                    About
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/news/">
+                    News
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/examples/">
+                    Examples
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" id="documentation" href="#">
+                    Documentation <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="documentation">
+                    
+
+    
+
+        
+
+            <li>
+                <a href="/documentation/getting-started/">
+                    Getting Started
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/documentation/instanciating-an-emulator/">
+                    Instanciating an Emulator
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/documentation/standard-devices/">
+                    Standard Devices
+                </a>
+            </li>
+
+        
+
+    
+
+
+                </ul>
+            </li>
+
+        
+
+    
+
+        
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" id="developers" href="#">
+                    Developers <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="developers">
+                    
+
+    
+
+        
+
+            <li>
+                <a href="/developers/writing-an-engine/">
+                    Writing an Engine
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/developers/implementing-a-device/">
+                    Implementing a Device
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/developers/extra-events/">
+                    Extra Events
+                </a>
+            </li>
+
+        
+
+    
+
+
+                </ul>
+            </li>
+
+        
+
+    
+
+        
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" id="more" href="#">
+                    More <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="more">
+                    
+
+    
+
+        
+
+            <li>
+                <a href="/more#contact">
+                    Contact
+                </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li>
+                <a href="/more#legal">
+                    Legal
+                </a>
+            </li>
+
+        
+
+    
+
+
+                </ul>
+            </li>
+
+        
+
+    
+
+
+
+                </ul>
+            </div>
+        </nav>
+
+        
+
+    <header class="show">
+        <div class="container">
+            <div class="logo">
+                <img class="picture" src="/images/logo.png" />
+            </div>
+            <canvas id="screen" class="example">
+            </canvas>
+        </div>
+    </header>
+
+    <section class="impact container">
+        <h2>Emulators. Emulators everywhere.</h2>
+        <p class="lead">Virt.js allows you to create embeddable emulators on a variety of architectures. More than that, it exposes conventioned public API so you can easily plug them into your own projects.
+    </section>
+
+    <hr class="mini-rule" />
+
+    <section class="advantages container">
+        <div class="row">
+            <div class="col-sm-4 opensource">
+                <div class="glyphicon glyphicon-globe"></div>
+                <h3>Open Source</h3>
+                <p>Virt.js is released under the GPL license, giving it free of charge to every open-source project that you could think of. The world is yours!</p>
+            </div>
+            <div class="col-sm-4 modular">
+                <div class="glyphicon glyphicon-th"></div>
+                <h3>Modular</h3>
+                <p>Virt.js aims to give you full leverage on the running emulator. It allows you to write your own devices should you need to, and directly wire them into the core.</p>
+            </div>
+            <div class="col-sm-4 fast">
+                <div class="glyphicon glyphicon-flash"></div>
+                <h3>Fast</h3>
+                <p>Thanks to an advanced JIT process, Virt.js is able to achieve incredible speed, and some engines can even run flawless on latest mobile browsers.</p>
+            </div>
+        </div>
+    </section>
+
+    <hr class="mini-rule" />
+
+    <section class="container">
+        <pre><code><span class="line"><span class="token comment" spellcheck="true">// By the way, this exact code is used for launching the emulator above :)</span></span><span class="line"></span><span class="line"><span class="token keyword" >import</span> <span class="token punctuation" >{</span> WebGLScreen <span class="token punctuation" >}</span>    <span class="token keyword" >from</span> <span class="token string" >'virtjs/devices/screens/WebGLScreen'</span><span class="token punctuation" >;</span></span><span class="line"><span class="token keyword" >import</span> <span class="token punctuation" >{</span> KeyboardInput <span class="token punctuation" >}</span>  <span class="token keyword" >from</span> <span class="token string" >'virtjs/devices/inputs/KeyboardInput'</span><span class="token punctuation" >;</span></span><span class="line"><span class="token keyword" >import</span> <span class="token punctuation" >{</span> fetch <span class="token punctuation" >}</span>          <span class="token keyword" >from</span> <span class="token string" >'virtjs/utilities/fetch'</span><span class="token punctuation" >;</span></span><span class="line"><span class="token keyword" >import</span> <span class="token punctuation" >{</span> Engine<span class="token punctuation" >,</span> inputs <span class="token punctuation" >}</span> <span class="token keyword" >from</span> <span class="token string" >'virtjs-gbjit/Engine'</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line"><span class="token keyword" >var</span> screen <span class="token operator" >=</span> <span class="token keyword" >new</span> <span class="token class-name" >WebGLScreen</span><span class="token punctuation" >(</span> <span class="token punctuation" >{</span> element <span class="token punctuation" >:</span> document<span class="token punctuation" >.</span><span class="token function" >querySelector<span class="token punctuation" >(</span></span> <span class="token string" >'#screen'</span> <span class="token punctuation" >)</span> <span class="token punctuation" >}</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line"><span class="token keyword" >var</span> input <span class="token operator" >=</span> <span class="token keyword" >new</span> <span class="token class-name" >KeyboardInput</span><span class="token punctuation" >(</span> <span class="token punctuation" >{</span> inputs <span class="token punctuation" >:</span> inputs <span class="token punctuation" >}</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line"><span class="token keyword" >var</span> engine <span class="token operator" >=</span> <span class="token keyword" >new</span> <span class="token class-name" >Engine</span><span class="token punctuation" >(</span> <span class="token punctuation" >{</span> devices <span class="token punctuation" >:</span> <span class="token punctuation" >{</span></span><span class="line">    screen <span class="token punctuation" >:</span> screen<span class="token punctuation" >,</span></span><span class="line">    input <span class="token punctuation" >:</span> input</span><span class="line"><span class="token punctuation" >}</span> <span class="token punctuation" >}</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line"><span class="token keyword" >var</span> rom <span class="token operator" >=</span> <span class="token function" >fetch<span class="token punctuation" >(</span></span> <span class="token string" >'/roms/2048-sanqui.gb'</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line">engine<span class="token punctuation" >.</span><span class="token function" >loadArrayBuffer<span class="token punctuation" >(</span></span> rom <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span></code></pre>
+    </section>
+
+
+
+    </body>
+
+</html>
