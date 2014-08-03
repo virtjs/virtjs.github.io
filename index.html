@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="/styles/default.css" />
 
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/collapse.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/dropdown.min.js"></script>
 
     </head>
@@ -18,14 +19,21 @@
 
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
-                <ul class="nav navbar-nav">
 
-                    <li><a class="navbar-brand" href="/">
-                        Virt.js
-                    </a></li>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">Virt.js</a>
+                </div>
 
-                    
-                    
+                <div class="collapse navbar-collapse" id="navigation">
+                    <ul class="nav navbar-nav">
+                        
+                        
 
     
 
@@ -219,20 +227,32 @@
     
 
 
+                    </ul>
+                </div>
 
-                </ul>
             </div>
         </nav>
 
         
 
     <header class="show">
+        <div class="container responsive-logo">
+            <div class="image">
+            </div>
+        </div>
         <div class="container">
             <div class="logo">
-                <img class="picture" src="/images/logo.png" />
+                <div class="image">
+                </div>
             </div>
-            <canvas id="screen" class="example">
-            </canvas>
+            <div class="example">
+                <div class="inner">
+                    <canvas class="screen">
+                    </canvas>
+                    <iframe class="star" src="http://ghbtns.com/github-btn.html?user=arcanis&repo=virt.js&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20">
+                    </iframe>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -266,7 +286,7 @@
     <hr class="mini-rule" />
 
     <section class="container">
-        <pre><code><span class="line"><span class="token comment" spellcheck="true">// By the way, this exact code is used for launching the emulator above :)</span></span><span class="line"></span><span class="line"><span class="token keyword" >import</span> <span class="token punctuation" >{</span> WebGLScreen <span class="token punctuation" >}</span>    <span class="token keyword" >from</span> <span class="token string" >'virtjs/devices/screens/WebGLScreen'</span><span class="token punctuation" >;</span></span><span class="line"><span class="token keyword" >import</span> <span class="token punctuation" >{</span> KeyboardInput <span class="token punctuation" >}</span>  <span class="token keyword" >from</span> <span class="token string" >'virtjs/devices/inputs/KeyboardInput'</span><span class="token punctuation" >;</span></span><span class="line"><span class="token keyword" >import</span> <span class="token punctuation" >{</span> fetch <span class="token punctuation" >}</span>          <span class="token keyword" >from</span> <span class="token string" >'virtjs/utilities/fetch'</span><span class="token punctuation" >;</span></span><span class="line"><span class="token keyword" >import</span> <span class="token punctuation" >{</span> Engine<span class="token punctuation" >,</span> inputs <span class="token punctuation" >}</span> <span class="token keyword" >from</span> <span class="token string" >'virtjs-gbjit/Engine'</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line"><span class="token keyword" >var</span> screen <span class="token operator" >=</span> <span class="token keyword" >new</span> <span class="token class-name" >WebGLScreen</span><span class="token punctuation" >(</span> <span class="token punctuation" >{</span> element <span class="token punctuation" >:</span> document<span class="token punctuation" >.</span><span class="token function" >querySelector<span class="token punctuation" >(</span></span> <span class="token string" >'#screen'</span> <span class="token punctuation" >)</span> <span class="token punctuation" >}</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line"><span class="token keyword" >var</span> input <span class="token operator" >=</span> <span class="token keyword" >new</span> <span class="token class-name" >KeyboardInput</span><span class="token punctuation" >(</span> <span class="token punctuation" >{</span> inputs <span class="token punctuation" >:</span> inputs <span class="token punctuation" >}</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line"><span class="token keyword" >var</span> engine <span class="token operator" >=</span> <span class="token keyword" >new</span> <span class="token class-name" >Engine</span><span class="token punctuation" >(</span> <span class="token punctuation" >{</span> devices <span class="token punctuation" >:</span> <span class="token punctuation" >{</span></span><span class="line">    screen <span class="token punctuation" >:</span> screen<span class="token punctuation" >,</span></span><span class="line">    input <span class="token punctuation" >:</span> input</span><span class="line"><span class="token punctuation" >}</span> <span class="token punctuation" >}</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line"><span class="token keyword" >var</span> rom <span class="token operator" >=</span> <span class="token function" >fetch<span class="token punctuation" >(</span></span> <span class="token string" >'/roms/2048-sanqui.gb'</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line">engine<span class="token punctuation" >.</span><span class="token function" >loadArrayBuffer<span class="token punctuation" >(</span></span> rom <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span></code></pre>
+        <pre><code><span class="line"><span class="token comment" spellcheck="true">// By the way, this exact code is used for launching the emulator above :)</span></span><span class="line"></span><span class="line"><span class="token keyword" >import</span> <span class="token punctuation" >{</span> WebGLScreen <span class="token punctuation" >}</span>    <span class="token keyword" >from</span> <span class="token string" >'virtjs/devices/screens/WebGLScreen'</span><span class="token punctuation" >;</span></span><span class="line"><span class="token keyword" >import</span> <span class="token punctuation" >{</span> KeyboardInput <span class="token punctuation" >}</span>  <span class="token keyword" >from</span> <span class="token string" >'virtjs/devices/inputs/KeyboardInput'</span><span class="token punctuation" >;</span></span><span class="line"><span class="token keyword" >import</span> <span class="token punctuation" >{</span> fetch <span class="token punctuation" >}</span>          <span class="token keyword" >from</span> <span class="token string" >'virtjs/utilities/fetch'</span><span class="token punctuation" >;</span></span><span class="line"><span class="token keyword" >import</span> <span class="token punctuation" >{</span> Engine<span class="token punctuation" >,</span> inputs <span class="token punctuation" >}</span> <span class="token keyword" >from</span> <span class="token string" >'virtjs-gbjit/Engine'</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line"><span class="token keyword" >var</span> screen <span class="token operator" >=</span> <span class="token keyword" >new</span> <span class="token class-name" >WebGLScreen</span><span class="token punctuation" >(</span> <span class="token punctuation" >{</span> element <span class="token punctuation" >:</span> document<span class="token punctuation" >.</span><span class="token function" >querySelector<span class="token punctuation" >(</span></span> <span class="token string" >'.example .screen'</span> <span class="token punctuation" >)</span> <span class="token punctuation" >}</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line"><span class="token keyword" >var</span> input <span class="token operator" >=</span> <span class="token keyword" >new</span> <span class="token class-name" >KeyboardInput</span><span class="token punctuation" >(</span> <span class="token punctuation" >{</span> inputs <span class="token punctuation" >:</span> inputs <span class="token punctuation" >}</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line"><span class="token keyword" >var</span> engine <span class="token operator" >=</span> <span class="token keyword" >new</span> <span class="token class-name" >Engine</span><span class="token punctuation" >(</span> <span class="token punctuation" >{</span> devices <span class="token punctuation" >:</span> <span class="token punctuation" >{</span></span><span class="line">    screen <span class="token punctuation" >:</span> screen<span class="token punctuation" >,</span></span><span class="line">    input <span class="token punctuation" >:</span> input</span><span class="line"><span class="token punctuation" >}</span> <span class="token punctuation" >}</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line"><span class="token keyword" >var</span> rom <span class="token operator" >=</span> <span class="token function" >fetch<span class="token punctuation" >(</span></span> <span class="token string" >'/roms/2048-sanqui.gb'</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line">engine<span class="token punctuation" >.</span><span class="token function" >loadArrayBuffer<span class="token punctuation" >(</span></span> rom <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span></code></pre>
     </section>
 
 

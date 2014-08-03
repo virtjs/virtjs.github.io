@@ -5,11 +5,7 @@
     <div class="container">
         <div class="row">
 
-            <article class="col-md-8">
-                {{ body }}
-            </article>
-
-            <nav class="col-md-4">
+            <nav class="col-md-4 col-md-push-8">
                 <div class="list-group article-navigation">
                     {% for name, target in navigation[meta.section] %}
                         {% if name == meta.title %}
@@ -24,6 +20,10 @@
                     {% endfor %}
                 </div>
             </nav>
+
+            <article class="col-md-8 col-md-pull-4">
+                {{ body }}
+            </article>
 
         </div>
     </div>

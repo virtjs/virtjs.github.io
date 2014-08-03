@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="/styles/default.css" />
 
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/collapse.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/dropdown.min.js"></script>
 
     </head>
@@ -18,14 +19,21 @@
 
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
-                <ul class="nav navbar-nav">
 
-                    <li><a class="navbar-brand" href="/">
-                        Virt.js
-                    </a></li>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">Virt.js</a>
+                </div>
 
-                    
-                    
+                <div class="collapse navbar-collapse" id="navigation">
+                    <ul class="nav navbar-nav">
+                        
+                        
 
     
 
@@ -219,8 +227,9 @@
     
 
 
+                    </ul>
+                </div>
 
-                </ul>
             </div>
         </nav>
 
@@ -229,31 +238,7 @@
     <div class="container">
         <div class="row">
 
-            <article class="col-md-8">
-                <div class="page-header"><h1 id="extra-events">Extra Events</h1></div><p>In some cases, you may want to hook some parts of the engine while it&#39;s running. In most emulators, such a thing can be very difficult since they are not really made for being extended at runtime. Virt.js is different, and allows you to choose between performances and extensibility by exposing events. All of them are totally optionals, and will be disabled if you do not explicitely ask for them when instanciating your engine.</p>
-<h2 id="usage">Usage</h2><p><code>js</code></p>
-<h2 id="event-list">Event list</h2><p>Here is the list of the events for standard engines (each engine expose its own events, even if most of them share the same names and parameters).</p>
-<h3 id="gameboy">Gameboy</h3><ul>
-<li><p><code>setup { }</code> (available on <code>engine</code> with the <code>setup</code> namespace)</p>
-<p>Emitted after an environment is bound to an engine.</p>
-</li>
-<li><p><code>read { address, value }</code> (available on <code>engine.mmu</code> with the <code>read</code> namespace)</p>
-<p>Emitted when the emulator wants to know the data at some place in the memory.</p>
-<p>Note that <code>value</code> is writable: you can set it to something else than <code>undefined</code>, and the emulator will return this value rather than the actual one.</p>
-</li>
-<li><p><code>write { address, value }</code> (available on <code>engine.mmu</code> with the <code>write</code> namespace)</p>
-<p>Emitted right before writing something somewhere.</p>
-<p>Note that <code>value</code> is writable: you can set it to something else, and the emulator will return this value rather than the actual one.</p>
-</li>
-<li><p><code>post-write { address, value }</code> (available on <code>engine.mmu</code> with the <code>write</code> namespace)</p>
-<p>Emitted right after writing something somewhere.</p>
-<p>Changing the <code>value</code> parameter is not possible anymore.</p>
-</li>
-</ul>
-
-            </article>
-
-            <nav class="col-md-4">
+            <nav class="col-md-4 col-md-push-8">
                 <div class="list-group article-navigation">
                     
                         
@@ -276,6 +261,30 @@
                     
                 </div>
             </nav>
+
+            <article class="col-md-8 col-md-pull-4">
+                <div class="page-header"><h1 id="extra-events">Extra Events</h1></div><p>In some cases, you may want to hook some parts of the engine while it&#39;s running. In most emulators, such a thing can be very difficult since they are not really made for being extended at runtime. Virt.js is different, and allows you to choose between performances and extensibility by exposing events. All of them are totally optionals, and will be disabled if you do not explicitely ask for them when instanciating your engine.</p>
+<h2 id="usage">Usage</h2><p><code>js</code></p>
+<h2 id="event-list">Event list</h2><p>Here is the list of the events for standard engines (each engine expose its own events, even if most of them share the same names and parameters).</p>
+<h3 id="gameboy">Gameboy</h3><ul>
+<li><p><code>setup { }</code> (available on <code>engine</code> with the <code>setup</code> namespace)</p>
+<p>Emitted after an environment is bound to an engine.</p>
+</li>
+<li><p><code>read { address, value }</code> (available on <code>engine.mmu</code> with the <code>read</code> namespace)</p>
+<p>Emitted when the emulator wants to know the data at some place in the memory.</p>
+<p>Note that <code>value</code> is writable: you can set it to something else than <code>undefined</code>, and the emulator will return this value rather than the actual one.</p>
+</li>
+<li><p><code>write { address, value }</code> (available on <code>engine.mmu</code> with the <code>write</code> namespace)</p>
+<p>Emitted right before writing something somewhere.</p>
+<p>Note that <code>value</code> is writable: you can set it to something else, and the emulator will return this value rather than the actual one.</p>
+</li>
+<li><p><code>post-write { address, value }</code> (available on <code>engine.mmu</code> with the <code>write</code> namespace)</p>
+<p>Emitted right after writing something somewhere.</p>
+<p>Changing the <code>value</code> parameter is not possible anymore.</p>
+</li>
+</ul>
+
+            </article>
 
         </div>
     </div>

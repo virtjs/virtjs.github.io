@@ -3,42 +3,105 @@ body {
     padding-bottom: 20px;
 }
 
-@media (max-width: 979px) {
-    body {
-        padding-top: 0;
-    }
-}
-
 @import "_bootswatch.scss";
 @import "_article.scss";
 @import "_syntax.scss";
 
 .show {
+    $gradient: linear-gradient(to bottom, #829DD6 0, #187C7B 100%);
+
     margin-bottom: 100px;
 
-    padding: 30px 0;
+    .logo {
+        display: none;
 
-    background: #327999;
-    background-image: linear-gradient(to bottom, #829DD6 0, #187C7B 100%);
-
-    .container {
-        display: flex;
+        position: relative;
     }
 
-    .logo {
-        flex: auto;
+    .responsive-logo {
+        position: relative;
+
+        margin-bottom: 100px;
+
+        padding-top: 40%;
+        padding-bottom: 60px;
+
+        background-image: $gradient;
+    }
+
+    .logo .image, .responsive-logo .image {
+        position: absolute;
+        left: 0; right: 0;
+        top: 30px; bottom: 30px;
+
+        background: url(/images/logo.png) no-repeat;
+        background-size: contain;
+    }
+
+    .logo .image {
+        background-position: left center;
+    }
+
+    .responsive-log .image {
+        background-position: center center;
     }
 
     .example {
         display: block;
         flex: none;
 
-        width: 33%;
-
         border: 10px solid #000000;
         border-radius: 20px;
 
         background: #FFFFFF;
+
+        .inner {
+            $emulator-width: 160;
+            $emulator-height: 144;
+
+            position: relative;
+            padding-top: ($emulator-height / $emulator-width) * 100%;
+        }
+
+        .screen {
+            position: absolute;
+            left: 0; top: 0;
+
+            width: 100%;
+            height: 100%;
+        }
+
+        .star {
+            position: absolute;
+            left: 20px; bottom: 20px;
+        }
+    }
+
+    @media (min-width: 768px) {
+        & {
+            padding: 30px 0;
+
+            background: $gradient;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .responsive-logo {
+            display: none;
+        }
+
+        .logo {
+            display: block;
+            flex: auto;
+        }
+
+        .example {
+            flex: none;
+
+            width: 30%;
+        }
     }
 }
 

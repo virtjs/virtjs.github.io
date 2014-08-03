@@ -5,11 +5,13 @@ pre {
     padding-right: 0;
 
     background: #0E0E0E;
+    background: #144855;
     color: #FFFFFF;
 }
 
 code {
     counter-reset: line;
+    overflow-x: auto;
 
     .line {
         display: block;
@@ -18,6 +20,8 @@ code {
 
         padding-left: 10px;
         padding-right: 10px;
+
+        white-space: nowrap;
 
         &::before {
             display: inline-block;
@@ -32,20 +36,12 @@ code {
 
             color: #8B9597;
         }
-
-        &:nth-child(odd) {
-            background: #000000;
-        }
-
-        &:nth-child(even) {
-            background: #191919;
-        }
     }
 
     .token {
 
         &.keyword {
-            color: #4E61AC;
+            color: #009BEF;
         }
 
         &.punctuation {

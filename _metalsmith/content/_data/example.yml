@@ -6,7 +6,7 @@
     import { fetch }          from 'virtjs/utilities/fetch';
     import { Engine, inputs } from 'virtjs-gbjit/Engine';
 
-    var screen = new WebGLScreen( { element : document.querySelector( '#screen' ) } );
+    var screen = new WebGLScreen( { element : document.querySelector( '.example .screen' ) } );
     var input = new KeyboardInput( { inputs : inputs } );
 
     var engine = new Engine( { devices : {
