@@ -4,7 +4,13 @@
     <head>
 
         <meta charset="utf-8" />
-        <title>Virt.js</title>
+
+        <title>
+            Virt.js
+            
+                - Standard Devices
+            
+        </title>
 
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.2.0+1/simplex/bootstrap.min.css" />
         <link rel="stylesheet" href="/styles/default.css" />
@@ -40,7 +46,7 @@
         
 
             <li>
-                <a href="/">
+                <a href="/about/">
                     About
                 </a>
             </li>
@@ -263,45 +269,21 @@
             </nav>
 
             <article class="col-md-8 col-md-pull-4">
-                <div class="page-header"><h1 id="standard-devices">Standard Devices</h1></div><p>The default Virt.js library contains a handful of ready-to-use devices, compatible with most standard engines. Here is a quick reference, by type.</p>
-<p><em>Please note that some engines may not be compatible with every device. These abstractions should work in many cases, but sometimes an engine is too complex for them, and a new device has to be written</em></p>
-<hr />
-
-<h2 id="screen-devices-virtjs-devices-screen-">Screen Devices (<code>virtjs/devices/screen/*</code>)</h2><h3 id="standard-api">Standard API</h3><ul>
-<li><p><code>setOutputSize( width, height )</code></p>
-<p>This method is used to inform the device from the size of the output canvas. You may want to call it whenever you resize the canvas.</p>
-</li>
-<li><p><code>setInputSize( width, height )</code></p>
-<p><strong>This method should probably be only called by engines.</strong></p>
+                <div class="page-header"><h1 id="standard-devices">Standard Devices</h1></div><p>The default Virt.js library contains a handful of ready-to-use devices, compatible with most standard engines (but not every environment). Here is a quick reference, by type.</p>
+<p><em>Please note that some engines may not be compatible with every device. These abstractions should work in many cases, but sometimes an engine is too complex for them, and a new custom device has to be wrote</em></p>
+<hr>
+<h2 id="screen-devices-virtjs-devices-screen-">Screen Devices (<code>virtjs/devices/screen/*</code>)</h2><h3 id="standard-api">Standard API</h3><h4 id="setoutputsize-width-height-">setOutputSize( width, height )</h4><p>This method is used to inform the device from the size of the output canvas. You may want to call it whenever you resize the canvas.</p>
+<h4 id="setinputsize-width-height-">setInputSize( width, height )</h4><p><strong>This method should probably be only called by engines.</strong></p>
 <p>This method is used to inform the device from the size of the screen, from an engine point of view.</p>
-</li>
-<li><p><code>setPixel( x, y, r, g, b )</code></p>
-<p><strong>This method should probably be only called by engines.</strong></p>
+<h4 id="setpixel-x-y-r-g-b-">setPixel( x, y, r, g, b )</h4><p><strong>This method should probably be only called by engines.</strong></p>
 <p>This method defines the color value of a specific pixel.</p>
-</li>
-<li><p><code>flushScreen( )</code></p>
-<p><strong>This method should probably be only called by engines.</strong></p>
+<h4 id="flushscreen-">flushScreen( )</h4><p><strong>This method should probably be only called by engines.</strong></p>
 <p>It informs the device that the current frame has been completed, and that the pending updates can be displayed.</p>
-</li>
-</ul>
-<h3 id="implementations">Implementations</h3><ul>
-<li><p><code>new WebGLScreen( { element } )</code></p>
-<p>This device is using a WebGL canvas in order to display its output. The <code>element</code> option is the canvas (if missing, a new canvas will be created and put available in the <code>element</code> property of the created instance).</p>
-</li>
-<li><p><code>new NullScreen( )</code></p>
-<p>The <code>NullScreen</code> is the dead-simple screen no-op. It never does anything. Useful when you want to achieve maximal performance under most restrictive environments (such as running tests in a Node.js context).</p>
-</li>
-</ul>
-<hr />
-
-<h2 id="input-devices-virtjs-devices-inputs-">Input Devices (<code>virtjs/devices/inputs/*</code>)</h2><h3 id="standard-api">Standard API</h3><ul>
-<li><p><code>destroy( )</code></p>
-<p>Call this method when you wish to unbind any attached event. The device will probably stop working as expected after this.</p>
-</li>
-</ul>
-<h3 id="implementations">Implementations</h3><ul>
-<li><p><code>new KeyboardInput( { element, map, inputs } )</code></p>
-<p>This device watches keyboard event on <code>element</code> (using <code>addEventListener</code> APIs), and map them to Engine inputs. If missing, the element defaults to <code>document.body</code>. One of <code>map</code> or <code>inputs</code> has to be specified:</p>
+<h3 id="implementations">Implementations</h3><h4 id="new-webglscreen-element-">new WebGLScreen( { element } )</h4><p>This device is using a WebGL canvas in order to display its output. The <code>element</code> option is the canvas (if missing, a new canvas will be created and put available in the <code>element</code> property of the created instance).</p>
+<h4 id="new-nullscreen-">new NullScreen( )</h4><p>The <code>NullScreen</code> is the dead-simple screen no-op. It never does anything. Useful when you want to achieve maximal performance under most restrictive environments (such as running tests in a Node.js context).</p>
+<hr>
+<h2 id="input-devices-virtjs-devices-inputs-">Input Devices (<code>virtjs/devices/inputs/*</code>)</h2><h3 id="standard-api">Standard API</h3><h4 id="destroy-force-false-">destroy( { force = false } )</h4><p>Call this method when you wish to unbind any attached event. The device will probably stop working as expected when the call return, even if there is no guarantee (some devices will want to clean their state before leaving). Use the <code>force</code> option to explicitely ask to end everything <em>now</em>.</p>
+<h3 id="implementations">Implementations</h3><h4 id="new-keyboardinput-element-map-inputs-">new KeyboardInput( { element, map, inputs } )</h4><p>This device watches keyboard event on <code>element</code> (using <code>addEventListener</code> APIs), and map them to Engine inputs. If missing, the element defaults to <code>document.body</code>. One of <code>map</code> or <code>inputs</code> has to be specified:</p>
 <ul>
 <li><p>The <code>map</code> is an object whose each key is a keyCode, and each value an engine symbol value, <strong>or, if missing</strong></p>
 </li>
@@ -309,11 +291,7 @@
 </li>
 </ul>
 <p>In this last case, a map is deduced based on the symbol names (basically, arrow keys are mapped on left/right/up/down symbols, and a few other keys are mapped too). Not all engines are compatible with this last option.</p>
-</li>
-<li><p><code>new NullInput( )</code></p>
-<p>The <code>NullInput</code> is the dead-simple input no-op. It never does anything. Useful when you want to achieve maximal performance under most restrictive environments (such as running tests in a Node.js context).</p>
-</li>
-</ul>
+<h4 id="new-nullinput-">new NullInput( )</h4><p>The <code>NullInput</code> is the dead-simple input no-op. It never does anything. Useful when you want to achieve maximal performance under most restrictive environments (such as running tests in a Node.js context).</p>
 
             </article>
 

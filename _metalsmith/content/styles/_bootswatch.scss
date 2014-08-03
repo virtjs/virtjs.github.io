@@ -1,5 +1,13 @@
 $color: #1575AA;
 
+a {
+    color: #2AB6DA;
+}
+
+a:hover, a:focus {
+    color: #0A3591;
+}
+
 .navbar-fixed-top .navbar-collapse, .navbar-fixed-bottom .navbar-collapse {
     max-height: initial;
 }
@@ -13,7 +21,7 @@ $color: #1575AA;
 }
 
 .navbar-default .navbar-nav .open .dropdown-menu>li>a:hover, .navbar-default .navbar-nav .open .dropdown-menu>li>a:focus {
-    color: $color;
+    color: #FFFFFF;
 }
 
 .list-group-item.active,

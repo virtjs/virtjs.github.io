@@ -217,8 +217,15 @@ metalsmith( __dirname )
             var base = Path.basename( file, Path.extname( file ) );
             var out = Path.join( dir, base + '.html' );
 
+            var data = { };
+
+            Object.keys( files.data ).forEach( function ( key ) {
+                data[ key ] = files.data[ key ]; } );
+
+            data.meta = files[ file ];
+
             var content = files[ file ].contents.toString( );
-            var html = Nunjucks.renderString( content, files.data );
+            var html = Nunjucks.renderString( content, data );
 
             files[ out ] = files[ file ];
             files[ out ].contents = new Buffer( html );

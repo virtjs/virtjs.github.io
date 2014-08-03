@@ -21,7 +21,8 @@ code {
         padding-left: 10px;
         padding-right: 10px;
 
-        white-space: nowrap;
+        white-space: pre;
+        word-wrap: initial;
 
         &::before {
             display: inline-block;

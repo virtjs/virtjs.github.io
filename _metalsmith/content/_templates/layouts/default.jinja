@@ -4,7 +4,13 @@
     <head>
 
         <meta charset="utf-8" />
-        <title>{{ main.site.name }}</title>
+
+        <title>
+            {{ main.site.name }}
+            {% if meta.title %}
+                - {{ meta.title }}
+            {% endif %}
+        </title>
 
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.2.0+1/simplex/bootstrap.min.css" />
         <link rel="stylesheet" href="/styles/default.css" />
