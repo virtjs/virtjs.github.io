@@ -14,7 +14,16 @@ First, include jspm somewhere in your page :
 <script src="https://jspm.io/system@0.6.7.js"></script>
 ```
 
-Then configure your paths :
+Then clone Virtjs and configure your paths :
+
+```
+$> git clone git@github.com:arcanis/virt.js virtjs
+$> ( cd virtjs && git checkout next )
+```
+
+<div class="alert alert-warning" role="alert">
+    <strong>Don't forget to checkout!</strong> The branch *master* currently contains a different (old) version of Virtjs. Since then, the project has slightly shifted (mainly from ES5 to ES6), and master has not been updated yet to reflect this change. So don't forget to checkout the *next* branch!
+</div>
 
 ```html
 <script>

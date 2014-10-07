@@ -242,7 +242,16 @@
         
 
     <article class="container">
-        <div class="page-header"><h1 id="news">News</h1></div><h2 id="2014-08-03-new-website-">2014-08-03: New website!</h2><p>I finally decided to give Virt.js a real website to host some documentation. I spent a bit of time on choosing the right framework to do so, and finally kept <a href="http://www.metalsmith.io/">Metalsmith</a>. For reference, I chose not to use standard plugins in order to be able to configure the website generation exactly as I wanted to. You can find it <a href="https://github.com/virtjs/virtjs.github.io/blob/master/_metalsmith/metalsmith.js">here</a>, the code is pretty neat.</p>
+        <div class="page-header"><h1 id="news">News</h1></div><h2 id="2014-10-07-jit-ing-delayed">2014-10-07: JIT&#39;ing delayed</h2><p>I would have loved to implement a JIT engine to power the Gameboy engine, but it sadly won&#39;t happen anytime soon. The issue is that the Gameboy is very laxist on its memory layout. For example:</p>
+<ul>
+<li>There is no alignment, so an instruction can warp onto multiple &#39;pages&#39;</li>
+<li>The instructions don&#39;t have fixed length, so we can&#39;t use that to avoid the wrapping</li>
+<li>An instruction can jump anywhere, including in the middle of another instruction</li>
+<li><strong>The code can be self modifying</strong>, and invalidating the instruction cache efficiently is hard</li>
+</ul>
+<p>In the meantime, I&#39;ve built back the interpreter (improving it a lot in the process, so no time has really been lost), and will work to improve its performances by other means. I might get back to the JIT compiler later, but I will have to think twice about the issues above before commiting.</p>
+<p>In other news, I&#39;ve finally added the example on the frontpage of the Website, implemented shader filters (and removed some for now), and worked on my first real Virtjs project, which I hope to show you soon!</p>
+<h2 id="2014-08-03-new-website-">2014-08-03: New website!</h2><p>I finally decided to give Virt.js a real website to host some documentation. I spent a bit of time on choosing the right framework to do so, and finally kept <a href="http://www.metalsmith.io/">Metalsmith</a>. For reference, I chose not to use standard plugins in order to be able to configure the website generation exactly as I wanted to. You can find it <a href="https://github.com/virtjs/virtjs.github.io/blob/master/_metalsmith/metalsmith.js">here</a>, the code is pretty neat.</p>
 <p>I&#39;m now going to work a bit more on the emulator itself - as you may have noticed, the version described in the website articles is not yet published. So first priority is to finish the Gameboy engine, which shouldn&#39;t take too long, then write an engine for another console.</p>
 
     </article>
