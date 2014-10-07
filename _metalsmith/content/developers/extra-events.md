@@ -6,12 +6,12 @@ title:   Extra Events
 
 # Extra Events
 
-In some cases, you may want to hook some parts of the engine while it's running. In most emulators, such a thing can be very difficult since they are not really made for being extended at runtime. Virt.js is different, and allows you to choose between performances and extensibility by exposing events. All of them are totally optionals, and will be disabled if you do not explicitely ask for their namespaces when instanciating your engine.
+In some cases, you may want to hook some parts of the engine while it's running. In most emulators, such a thing can be very difficult since they are not really made for being extended at runtime. Virtjs is different, and allows you to choose between performances and extensibility by exposing events. All of them are totally optionals, and will be disabled if you do not explicitely ask for their namespaces when instanciating your engine.
 
 ## Usage
 
 ```js
-import { Engine } from 'virtjs-gbjit/Engine';
+import { Engine } from 'virtjs-gb/Engine';
 
 var engine = new Engine( { events : [
     'setup',      // enable the 'setup' event

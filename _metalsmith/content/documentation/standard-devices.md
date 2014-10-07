@@ -6,7 +6,7 @@ title:   Standard Devices
 
 # Standard Devices
 
-The default Virt.js library contains a handful of ready-to-use devices, compatible with most standard engines (but not every environment). Here is a quick reference, by type.
+The default Virtjs library contains a handful of ready-to-use devices, compatible with most standard engines (but not every environment). Here is a quick reference, by type.
 
 *Please note that some engines may not be compatible with every device. These abstractions should work in many cases, but sometimes an engine is too complex for them, and a new custom device has to be wrote*
 

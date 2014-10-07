@@ -28,7 +28,7 @@ $> ( cd virtjs && git checkout next )
 ```html
 <script>
     System.paths[ 'virtjs/*' ] = '/virtjs/libraries/virtjs/virtjs/*.js';
-    System.paths[ 'virtjs-gbjit/*' ] = '/virtjs/libraries/virtjs-gbjit/virtjs-gbjit/*.js';
+    System.paths[ 'virtjs-gb/*' ] = '/virtjs/libraries/virtjs-gb/virtjs-gb/*.js';
 </script>
 ```
 
@@ -37,7 +37,7 @@ And finally, load the modules you wish to use !
 ```html
 <script>
     Promise.all( [
-        System.import( 'virtjs-gbjit/Engine' )
+        System.import( 'virtjs-gb/Engine' )
     ] ).then( function ( modules ) {
         console.log( modules[ 0 ].Engine );
     } );
@@ -55,7 +55,7 @@ However, my personal advice is to use ES6 yourself, so you would end up with thi
 And, in `my-script.js` :
 
 ```js
-import { Engine } from 'virtjs-gbjit/Engine';
+import { Engine } from 'virtjs-gb/Engine';
 
 console.log( Engine );
 ```

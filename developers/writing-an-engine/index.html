@@ -6,7 +6,7 @@
         <meta charset="utf-8" />
 
         <title>
-            Virt.js
+            Virtjs
             
                 - Writing an Engine
             
@@ -33,7 +33,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/">Virt.js</a>
+                    <a class="navbar-brand" href="/">Virtjs</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="navigation">
@@ -251,7 +251,7 @@
             </nav>
 
             <article class="col-md-8 col-md-pull-4">
-                <div class="page-header"><h1 id="writing-an-engine">Writing an Engine</h1></div><p>Creating an emulator is as simple as creating a few classes. Let&#39;s see what Virt.js can do for you!</p>
+                <div class="page-header"><h1 id="writing-an-engine">Writing an Engine</h1></div><p>Creating an emulator is as simple as creating a few classes. Let&#39;s see what Virtjs can do for you!</p>
 <p>In this tutorial, we will create an engine for the brainfuck language.</p>
 <h2 id="instruction-set">Instruction Set</h2><p>If you&#39;ve never heard about it before, the brainfuck is an esotheric language whose particularity is to contain only six instructions (in the following array, <code>*P</code> means <em>&quot;The data located at <code>P</code>&quot;</em>).</p>
 <table class="table"><thead><tr>
@@ -300,7 +300,7 @@
 <li><strong>A recompiler</strong> will, as implied, recompile the original program in order to convert all the emulated machine primitives into the host environment primitives. For example, an asm-like <code>add a, b</code> instruction would become <code>a + b</code> in Javascript. Since the recompiled code is native, it can be run much faster, avoiding expensive indirections. However, it involves a long startup time, and may be impossible in some cases (for example with self-modifying codes).</li>
 <li><strong>A JIT</strong> is a bit like the recompiler approach, but with different advantages and inconvenients. The JIT will recompile part of the original program, but only when needed. It avoids the burden of having to compile the full program, and allows to recompile some parts of the code if they happen to change during the execution, but requires some additional runtime code to do its magic.</li>
 </ul>
-<p>Nevertheless, JIT engines offer many advantages over the two other approaches, and most of Virt.js engines will use them. And guess what? That&#39;s a good news! Since they are so powerful, the Virt.js core contains a ready-to-use JIT compilation strategy. You can use it to bootstrap your engine without hassle. Let&#39;s dig it.</p>
+<p>Nevertheless, JIT engines offer many advantages over the two other approaches, and most of Virtjs engines will use them. And guess what? That&#39;s a good news! Since they are so powerful, the Virtjs core contains a ready-to-use JIT compilation strategy. You can use it to bootstrap your engine without hassle. Let&#39;s dig it.</p>
 <pre><code><span class="line"><span class="token keyword" >import</span> <span class="token punctuation" >{</span> JIT <span class="token punctuation" >}</span> <span class="token keyword" >from</span> <span class="token string" >'virtjs/core/JIT'</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line"><span class="token keyword" >var</span> compiler<span class="token punctuation" >;</span>    <span class="token comment" spellcheck="true">/* we'll get to that later :) */</span></span><span class="line"><span class="token keyword" >var</span> environment<span class="token punctuation" >;</span> <span class="token comment" spellcheck="true">/* 'environment' is just an instance of your class Environment */</span></span><span class="line"></span><span class="line"><span class="token keyword" >var</span> jit <span class="token operator" >=</span> <span class="token keyword" >new</span> <span class="token class-name" >JIT</span><span class="token punctuation" >(</span> compiler<span class="token punctuation" >,</span> environment <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line">jit<span class="token punctuation" >.</span><span class="token function" >continue<span class="token punctuation" >(</span></span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span></code></pre><p>That&#39;s possibly everything you need to know about the JIT structure. Cross my heart. It takes two parameters at construction:</p>
 <ul>
 <li>A <strong>compiler</strong>, which is an instance of a special type of class that we will detail in the following part.</li>
@@ -315,7 +315,7 @@
 <li><p><code>compileFrom</code> is the main one. It is used to transform emulated bytecode into a Javascript function (we&#39;ll see how to do it later). The <code>base</code> parameter is the start address, and the <code>limit</code> is the maximal read size. Actually, you may want to read more than this amount if your instructions take more than a single byte. The point is, stop reading instructions as soon as possible when you hit the limit.</p>
 <p>The last thing we should talk about this function is its return type. As you can see, we actually return another function. This later function will be executing by the JIT engine any time it would have to execute the code located at the <code>base</code> address, and will pass it two parameters: the JIT class instance itself, and the environment that you put in the JIT instanciation parameters.</p>
 </li>
-<li><p><code>disassembleAt</code> is very simple: it takes an address, and returns the textual representation of the instruction. It is actually not required strictly speaking (since it would hurt performances to do so), but it&#39;s usually a useful thing to have, and some devices or program may like it (for example the Virt.js debugger).</p>
+<li><p><code>disassembleAt</code> is very simple: it takes an address, and returns the textual representation of the instruction. It is actually not required strictly speaking (since it would hurt performances to do so), but it&#39;s usually a useful thing to have, and some devices or program may like it (for example the Virtjs debugger).</p>
 </li>
 </ul>
 <p>So, with these informations, we can start implementing our compiler:</p>

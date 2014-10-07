@@ -6,10 +6,10 @@ title:   Instanciating an Emulator
 
 # Instanciating an Emulator
 
-A Virt.js emulator is a simple object. Its exact type depends on the emulator (there is no strict inheritance), but that doesn't really matter since most emulators will expose the same API. For example, assuming you want to instanciate a Gameboy emulator, the following code is a good start.
+A Virtjs emulator is a simple object. Its exact type depends on the emulator (there is no strict inheritance), but that doesn't really matter since most emulators will expose the same API. For example, assuming you want to instanciate a Gameboy emulator, the following code is a good start.
 
 ```js
-import { Engine } from 'virtjs-gbjit/Engine';
+import { Engine } from 'virtjs-gb/Engine';
 
 var engine = new Engine( /*...*/ );
 ```
@@ -27,8 +27,8 @@ import { WebGLScreen } from 'virtjs/devices/screens/WebGLScreen';
 import { AnimationFrameTimer } from 'virtjs/devices/timers/AnimationFrameTimer';
 
 // The "inputs" variable contains a dict used to feed the Input devices
-import { Engine } from 'virtjs-gbjit/Engine';
-import { inputs } from 'virtjs-gbjit/constants';
+import { Engine } from 'virtjs-gb/Engine';
+import { inputs } from 'virtjs-gb/constants';
 
 var canvas = document.querySelector( '#canvas' );
 

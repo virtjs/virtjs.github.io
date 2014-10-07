@@ -5,8 +5,8 @@ import { WebGLScreen }         from 'virtjs/devices/screens/WebGLScreen';
 import { AnimationFrameTimer } from 'virtjs/devices/timers/AnimationFrameTimer';
 import { fetch }               from 'virtjs/tools';
 
-import { Engine }              from 'virtjs-gbjit/Engine';
-import { inputs }              from 'virtjs-gbjit/constants';
+import { Engine }              from 'virtjs-gb/Engine';
+import { inputs }              from 'virtjs-gb/constants';
 
 var input = new KeyboardInput( { inputs : inputs } );
 var screen = new WebGLScreen( { canvas : document.querySelector( '.example .screen' ) } );

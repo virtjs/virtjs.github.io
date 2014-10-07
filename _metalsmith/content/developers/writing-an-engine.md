@@ -6,7 +6,7 @@ title:   Writing an Engine
 
 # Writing an Engine
 
-Creating an emulator is as simple as creating a few classes. Let's see what Virt.js can do for you!
+Creating an emulator is as simple as creating a few classes. Let's see what Virtjs can do for you!
 
 In this tutorial, we will create an engine for the brainfuck language.
 
@@ -118,7 +118,7 @@ An emulator may be designed from multiple ways:
 - **A recompiler** will, as implied, recompile the original program in order to convert all the emulated machine primitives into the host environment primitives. For example, an asm-like `add a, b` instruction would become `a + b` in Javascript. Since the recompiled code is native, it can be run much faster, avoiding expensive indirections. However, it involves a long startup time, and may be impossible in some cases (for example with self-modifying codes).
 - **A JIT** is a bit like the recompiler approach, but with different advantages and inconvenients. The JIT will recompile part of the original program, but only when needed. It avoids the burden of having to compile the full program, and allows to recompile some parts of the code if they happen to change during the execution, but requires some additional runtime code to do its magic.
 
-Nevertheless, JIT engines offer many advantages over the two other approaches, and most of Virt.js engines will use them. And guess what? That's a good news! Since they are so powerful, the Virt.js core contains a ready-to-use JIT compilation strategy. You can use it to bootstrap your engine without hassle. Let's dig it.
+Nevertheless, JIT engines offer many advantages over the two other approaches, and most of Virtjs engines will use them. And guess what? That's a good news! Since they are so powerful, the Virtjs core contains a ready-to-use JIT compilation strategy. You can use it to bootstrap your engine without hassle. Let's dig it.
 
 ```js
 import { JIT } from 'virtjs/core/JIT';
@@ -202,7 +202,7 @@ So, a compiler contains two methods:
 
     The last thing we should talk about this function is its return type. As you can see, we actually return another function. This later function will be executing by the JIT engine any time it would have to execute the code located at the `base` address, and will pass it two parameters: the JIT class instance itself, and the environment that you put in the JIT instanciation parameters.
 
-  - `disassembleAt` is very simple: it takes an address, and returns the textual representation of the instruction. It is actually not required strictly speaking (since it would hurt performances to do so), but it's usually a useful thing to have, and some devices or program may like it (for example the Virt.js debugger).
+  - `disassembleAt` is very simple: it takes an address, and returns the textual representation of the instruction. It is actually not required strictly speaking (since it would hurt performances to do so), but it's usually a useful thing to have, and some devices or program may like it (for example the Virtjs debugger).
 
 So, with these informations, we can start implementing our compiler:
 
