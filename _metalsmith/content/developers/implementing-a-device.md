@@ -39,7 +39,7 @@ export class StatScreen extends WebGLScreen {
         if ( target[ index + 0 ] === 0xFF &&
              target[ index + 1 ] === 0xFF &&
              target[ index + 2 ] === 0xFF )
-            this.whitePixelCount -= 1;
+            this.whitePixelCount += 1;
 
         var whitePixelCount = this.whitePixelCount;
         var inputSize = this._inputWidth * this._inputHeight;
