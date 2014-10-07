@@ -5,12 +5,16 @@ title:  More
 
 # Contact
 
-Please file issues on the [Github repository](https://arcanis.github.io/virt.js/), ask help on [Stack Overflow](), and [mail me](mael@virtjs.com) for any other question.
+Please file issues on the [Github repository](https://github.com/arcanis/virt.js/), ask for help on [Stack Overflow](http://stackoverflow.com/), and [mail me](nison.mael@gmail.com) for any other question.
 
 # Legal
 
-Virt.js is released under the [GPL v3](http://www.gnu.org/copyleft/gpl.html) licence. You can use it for use in your open-source softwares, but you cannot use it in any proprietary context without the express authorization from the original Virt.js copyright owner.
+Virtjs is released under the [MIT](http://opensource.org/licenses/MIT) license.
 
-### Quick Summary
-
-> You may copy, distribute and modify the software as long as you track changes/dates of in source files and keep modifications under GPL. You can distribute your application using a GPL library commercially, but you must also provide the source code. GPL v3 tries to close some loopholes in GPL v2. This license must be used with GPL v3 compatible licenses, including notably the Apache 2.0 license.
+> **Copyright © 2014 Maël Nison**
+>
+> Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+>
+> The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+>
+> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
