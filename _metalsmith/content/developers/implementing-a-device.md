@@ -27,7 +27,7 @@ export class StatScreen extends WebGLScreen {
     setPixel( x, y, r, g, b ) {
 
         var target = this._data;
-        var index = ( y * this._width + x ) * 3;
+        var index = ( y * this._inputWidth + x ) * 3;
 
         if ( target[ index + 0 ] === 0xFF &&
              target[ index + 1 ] === 0xFF &&
@@ -42,9 +42,9 @@ export class StatScreen extends WebGLScreen {
             this.whitePixelCount -= 1;
 
         var whitePixelCount = this.whitePixelCount;
-        var displaySize = this._width * this._height;
+        var inputSize = this._inputWidth * this._inputHeight;
 
-        this.whitePixelRatio = this.whitePixelCount / displaySize;
+        this.whitePixelRatio = this.whitePixelCount / inputSize;
 
     }
 
