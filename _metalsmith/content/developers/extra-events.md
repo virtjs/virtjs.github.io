@@ -14,17 +14,17 @@ In some cases, you may want to hook some parts of the engine while it's running.
 import { Engine } from 'virtjs-gbjit/Engine';
 
 var engine = new Engine( { events : [
-    'setup',      // will enable the 'setup' event
-    'read',       // will enable the 'read' event
-    'write',      // will enable the 'write' and 'post-write' events
-    'instruction' // will enable the 'instruction' event
+    'setup',      // enable the 'setup' event
+    'read',       // enable the 'read' event
+    'write',      // enable the 'write' and 'post-write' events
+    'instruction' // enable the 'instruction' event
 ] } );
 
-engine.mmu.on( 'setup', ( ) => {
+engine.on( 'setup', ( ) => {
     console.log( 'engine setup' );
 } );
 
-engine.on( 'write', address => {
+engine.mmu.on( 'write', address => {
     // *(0) == 0, *(1) == 1, ...
     // will probably break everything :)
     return address;
@@ -37,19 +37,15 @@ Here is the list of the events for standard engines (each engine expose its own 
 
 ### Gameboy
 
----
-
 #### setup
 
 **Available on `engine` with the `setup` namespace.**
 
 Emitted after an environment is bound to an engine.
 
----
-
 #### instruction (address, opcode, breakRequested)
 
-**Available on `engine` with the `instruction` namespace.**
+**Available on `engine.interpreter` with the `instruction` namespace.**
 
 Emitted before the emulator execute an instruction.
 
@@ -69,8 +65,6 @@ engine.on( 'instruction', event => {
 } );
 ```
 
----
-
 #### read (address, value)
 
 **Available on `engine.mmu` with the `read` namespace.**
@@ -81,8 +75,6 @@ Emitted when the emulator wants to know the data at some place in the memory.
     `value` is writable: you can set it to something else than `undefined`, and the emulator will return this value rather than the actual one.
 </div>
 
----
-
 #### write (address, value)
 
 **Available on `engine.mmu` with the `write` namespace.**
@@ -92,8 +84,6 @@ Emitted right before writing something somewhere.
 <div class="alert alert-info" role="alert">
     `value` is writable: you can set it to something else, and the emulator will return this value rather than the actual one.
 </div>
-
----
 
 #### post-write (address, value)
 

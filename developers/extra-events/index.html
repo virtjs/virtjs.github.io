@@ -148,18 +148,6 @@
         
 
             <li>
-                <a href="/developers/writing-an-engine/">
-                    Writing an Engine
-                </a>
-            </li>
-
-        
-
-    
-
-        
-
-            <li>
                 <a href="/developers/implementing-a-device/">
                     Implementing a Device
                 </a>
@@ -248,12 +236,6 @@
                 <div class="list-group article-navigation">
                     
                         
-                            <a class="list-group-item" href="/developers/writing-an-engine/">
-                                Writing an Engine
-                            </a>
-                        
-                    
-                        
                             <a class="list-group-item" href="/developers/implementing-a-device/">
                                 Implementing a Device
                             </a>
@@ -270,12 +252,10 @@
 
             <article class="col-md-8 col-md-pull-4">
                 <div class="page-header"><h1 id="extra-events">Extra Events</h1></div><p>In some cases, you may want to hook some parts of the engine while it&#39;s running. In most emulators, such a thing can be very difficult since they are not really made for being extended at runtime. Virt.js is different, and allows you to choose between performances and extensibility by exposing events. All of them are totally optionals, and will be disabled if you do not explicitely ask for their namespaces when instanciating your engine.</p>
-<h2 id="usage">Usage</h2><pre><code><span class="line"><span class="token keyword" >import</span> <span class="token punctuation" >{</span> Engine <span class="token punctuation" >}</span> <span class="token keyword" >from</span> <span class="token string" >'virtjs-gbjit/Engine'</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line"><span class="token keyword" >var</span> engine <span class="token operator" >=</span> <span class="token keyword" >new</span> <span class="token class-name" >Engine</span><span class="token punctuation" >(</span> <span class="token punctuation" >{</span> events <span class="token punctuation" >:</span> <span class="token punctuation" >[</span></span><span class="line">    <span class="token string" >'setup'</span><span class="token punctuation" >,</span>      <span class="token comment" spellcheck="true">// will enable the 'setup' event</span></span><span class="line">    <span class="token string" >'read'</span><span class="token punctuation" >,</span>       <span class="token comment" spellcheck="true">// will enable the 'read' event</span></span><span class="line">    <span class="token string" >'write'</span><span class="token punctuation" >,</span>      <span class="token comment" spellcheck="true">// will enable the 'write' and 'post-write' events</span></span><span class="line">    <span class="token string" >'instruction'</span> <span class="token comment" spellcheck="true">// will enable the 'instruction' event</span></span><span class="line"><span class="token punctuation" >]</span> <span class="token punctuation" >}</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line">engine<span class="token punctuation" >.</span>mmu<span class="token punctuation" >.</span><span class="token function" >on<span class="token punctuation" >(</span></span> <span class="token string" >'setup'</span><span class="token punctuation" >,</span> <span class="token punctuation" >(</span> <span class="token punctuation" >)</span> <span class="token operator" >=</span><span class="token operator" >></span> <span class="token punctuation" >{</span></span><span class="line">    console<span class="token punctuation" >.</span><span class="token function" >log<span class="token punctuation" >(</span></span> <span class="token string" >'engine setup'</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line"><span class="token punctuation" >}</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line">engine<span class="token punctuation" >.</span><span class="token function" >on<span class="token punctuation" >(</span></span> <span class="token string" >'write'</span><span class="token punctuation" >,</span> address <span class="token operator" >=</span><span class="token operator" >></span> <span class="token punctuation" >{</span></span><span class="line">    <span class="token comment" spellcheck="true">// *(0) == 0, *(1) == 1, ...</span></span><span class="line">    <span class="token comment" spellcheck="true">// will probably break everything :)</span></span><span class="line">    <span class="token keyword" >return</span> address<span class="token punctuation" >;</span></span><span class="line"><span class="token punctuation" >}</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span></code></pre><h2 id="event-list">Event list</h2><p>Here is the list of the events for standard engines (each engine expose its own events, even if most of them share the same names and parameters).</p>
-<h3 id="gameboy">Gameboy</h3><hr>
-<h4 id="setup">setup</h4><p><strong>Available on <code>engine</code> with the <code>setup</code> namespace.</strong></p>
+<h2 id="usage">Usage</h2><pre><code><span class="line"><span class="token keyword" >import</span> <span class="token punctuation" >{</span> Engine <span class="token punctuation" >}</span> <span class="token keyword" >from</span> <span class="token string" >'virtjs-gbjit/Engine'</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line"><span class="token keyword" >var</span> engine <span class="token operator" >=</span> <span class="token keyword" >new</span> <span class="token class-name" >Engine</span><span class="token punctuation" >(</span> <span class="token punctuation" >{</span> events <span class="token punctuation" >:</span> <span class="token punctuation" >[</span></span><span class="line">    <span class="token string" >'setup'</span><span class="token punctuation" >,</span>      <span class="token comment" spellcheck="true">// enable the 'setup' event</span></span><span class="line">    <span class="token string" >'read'</span><span class="token punctuation" >,</span>       <span class="token comment" spellcheck="true">// enable the 'read' event</span></span><span class="line">    <span class="token string" >'write'</span><span class="token punctuation" >,</span>      <span class="token comment" spellcheck="true">// enable the 'write' and 'post-write' events</span></span><span class="line">    <span class="token string" >'instruction'</span> <span class="token comment" spellcheck="true">// enable the 'instruction' event</span></span><span class="line"><span class="token punctuation" >]</span> <span class="token punctuation" >}</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line">engine<span class="token punctuation" >.</span><span class="token function" >on<span class="token punctuation" >(</span></span> <span class="token string" >'setup'</span><span class="token punctuation" >,</span> <span class="token punctuation" >(</span> <span class="token punctuation" >)</span> <span class="token operator" >=</span><span class="token operator" >></span> <span class="token punctuation" >{</span></span><span class="line">    console<span class="token punctuation" >.</span><span class="token function" >log<span class="token punctuation" >(</span></span> <span class="token string" >'engine setup'</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line"><span class="token punctuation" >}</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span><span class="line"></span><span class="line">engine<span class="token punctuation" >.</span>mmu<span class="token punctuation" >.</span><span class="token function" >on<span class="token punctuation" >(</span></span> <span class="token string" >'write'</span><span class="token punctuation" >,</span> address <span class="token operator" >=</span><span class="token operator" >></span> <span class="token punctuation" >{</span></span><span class="line">    <span class="token comment" spellcheck="true">// *(0) == 0, *(1) == 1, ...</span></span><span class="line">    <span class="token comment" spellcheck="true">// will probably break everything :)</span></span><span class="line">    <span class="token keyword" >return</span> address<span class="token punctuation" >;</span></span><span class="line"><span class="token punctuation" >}</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span></code></pre><h2 id="event-list">Event list</h2><p>Here is the list of the events for standard engines (each engine expose its own events, even if most of them share the same names and parameters).</p>
+<h3 id="gameboy">Gameboy</h3><h4 id="setup">setup</h4><p><strong>Available on <code>engine</code> with the <code>setup</code> namespace.</strong></p>
 <p>Emitted after an environment is bound to an engine.</p>
-<hr>
-<h4 id="instruction-address-opcode-breakrequested-">instruction (address, opcode, breakRequested)</h4><p><strong>Available on <code>engine</code> with the <code>instruction</code> namespace.</strong></p>
+<h4 id="instruction-address-opcode-breakrequested-">instruction (address, opcode, breakRequested)</h4><p><strong>Available on <code>engine.interpreter</code> with the <code>instruction</code> namespace.</strong></p>
 <p>Emitted before the emulator execute an instruction.</p>
 <div class="alert alert-info" role="alert">
     <code>breakRequested</code> is writable: you can set it to <code>true</code> (default <code>false</code>). If you do so, the emulator will leave the execution before executing the instruction.
@@ -285,21 +265,18 @@
     <strong>Be careful</strong>, doing something like this would prevent the emulator from going further, since you would always break when resuming:
 </div>
 
-<pre><code><span class="line">engine<span class="token punctuation" >.</span><span class="token function" >on<span class="token punctuation" >(</span></span> <span class="token string" >'instruction'</span><span class="token punctuation" >,</span> event <span class="token operator" >=</span><span class="token operator" >></span> <span class="token punctuation" >{</span></span><span class="line">    <span class="token keyword" >if</span> <span class="token punctuation" >(</span> address <span class="token operator" >===</span> <span class="token number" >0x0042</span> <span class="token punctuation" >)</span> <span class="token punctuation" >{</span></span><span class="line">        event<span class="token punctuation" >.</span>breakRequested <span class="token operator" >=</span> <span class="token keyword" >true</span><span class="token punctuation" >;</span></span><span class="line">    <span class="token punctuation" >}</span></span><span class="line"><span class="token punctuation" >}</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span></code></pre><hr>
-<h4 id="read-address-value-">read (address, value)</h4><p><strong>Available on <code>engine.mmu</code> with the <code>read</code> namespace.</strong></p>
+<pre><code><span class="line">engine<span class="token punctuation" >.</span><span class="token function" >on<span class="token punctuation" >(</span></span> <span class="token string" >'instruction'</span><span class="token punctuation" >,</span> event <span class="token operator" >=</span><span class="token operator" >></span> <span class="token punctuation" >{</span></span><span class="line">    <span class="token keyword" >if</span> <span class="token punctuation" >(</span> address <span class="token operator" >===</span> <span class="token number" >0x0042</span> <span class="token punctuation" >)</span> <span class="token punctuation" >{</span></span><span class="line">        event<span class="token punctuation" >.</span>breakRequested <span class="token operator" >=</span> <span class="token keyword" >true</span><span class="token punctuation" >;</span></span><span class="line">    <span class="token punctuation" >}</span></span><span class="line"><span class="token punctuation" >}</span> <span class="token punctuation" >)</span><span class="token punctuation" >;</span></span></code></pre><h4 id="read-address-value-">read (address, value)</h4><p><strong>Available on <code>engine.mmu</code> with the <code>read</code> namespace.</strong></p>
 <p>Emitted when the emulator wants to know the data at some place in the memory.</p>
 <div class="alert alert-info" role="alert">
     <code>value</code> is writable: you can set it to something else than <code>undefined</code>, and the emulator will return this value rather than the actual one.
 </div>
 
-<hr>
 <h4 id="write-address-value-">write (address, value)</h4><p><strong>Available on <code>engine.mmu</code> with the <code>write</code> namespace.</strong></p>
 <p>Emitted right before writing something somewhere.</p>
 <div class="alert alert-info" role="alert">
     <code>value</code> is writable: you can set it to something else, and the emulator will return this value rather than the actual one.
 </div>
 
-<hr>
 <h4 id="post-write-address-value-">post-write (address, value)</h4><p><strong>Available on <code>engine.mmu</code> with the <code>write</code> namespace.</strong></p>
 <p>Emitted right <em>after</em> writing something somewhere.</p>
 

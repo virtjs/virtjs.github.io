@@ -48,6 +48,8 @@ article {
     border-top: 1px solid #CCC; }
   article p, article ul, article blockquote {
     line-height: 1.8em; }
+  article img {
+    max-width: 100%; }
   article blockquote {
     position: relative;
     font-size: 1em;

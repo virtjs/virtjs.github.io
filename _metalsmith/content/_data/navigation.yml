@@ -8,7 +8,7 @@ Documentation:
     Standard Devices:          "/documentation/standard-devices/"
 
 Developers:
-    Writing an Engine:         "/developers/writing-an-engine/"
+#   Writing an Engine:         "/developers/writing-an-engine/"
     Implementing a Device:     "/developers/implementing-a-device/"
     Extra Events:              "/developers/extra-events/"
 
