@@ -40,9 +40,21 @@ It informs the device that the current frame has been completed, and that the pe
 
 ### Implementations
 
-#### new WebGLScreen( { element } )
+#### new WebGLScreen( { canvas, filterOptions } )
 
-This device is using a WebGL canvas in order to display its output. The `element` option is the canvas (if missing, a new canvas will be created and put available in the `element` property of the created instance).
+This device is using a WebGL canvas in order to display its output. The `canvas` option is the output canvas (if missing, a new canvas will be created and put available in the `canvas` property of the created instance). The output will use a default GLSL shader which can be tweaked with a few options. The allowed keys in the `filterOptions` object are :
+
+  - **hardScan**
+  - **hardPix**
+  - **darkMask**
+  - **lightMask**
+  - **outerVig**
+  - **innerVig**
+  - **bending**
+
+#### new DataScreen( )
+
+This device is not really made to be used by the end-user. It stores the pixel output inside a Uint8Array.
 
 #### new NullScreen( )
 
@@ -73,3 +85,35 @@ In this last case, a map is deduced based on the symbol names (basically, arrow 
 #### new NullInput( )
 
 The `NullInput` is the dead-simple input no-op. It never does anything. Useful when you want to achieve maximal performance under most restrictive environments (such as running tests in a Node.js context).
+
+--
+
+## Timer Devices (`virtjs/devices/timers/*`)
+
+### Standard API
+
+#### nextTick( callback )
+
+**This method should probably be only called by engines.**
+
+Schedule a function to be called on the next tick. Return a 'marker', which can have any value.
+
+#### cancelTick( marker )
+
+**This method should probably be only called by engines.**
+
+Unschedule a callback registered with `nextTick`.
+
+### Implementations
+
+#### AnimationFrameTimer( )
+
+Your go-to when using Virtjs on browsers, it uses the builtin `requestAnimationFrame` function.
+
+#### ImmediateTimer( )
+
+Node application may want to use this. It uses the `setImmediate` builtin.
+
+#### NullTimer( )
+
+Never call any callback. You probably don't want to use it, except in some rare cases.

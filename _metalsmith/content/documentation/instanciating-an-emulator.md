@@ -23,19 +23,25 @@ import { KeyboardInput } from 'virtjs/devices/inputs/KeyboardInput';
 // The "Screen" devices allow to specify what the engine should display during execution
 import { WebGLScreen } from 'virtjs/devices/screens/WebGLScreen';
 
+// The "Timer" devices define how should tick a clock
+import { AnimationFrameTimer } from 'virtjs/devices/timers/AnimationFrameTimer';
+
 // The "inputs" variable contains a dict used to feed the Input devices
-import { Engine, inputs } from 'virtjs-gbjit/Engine';
+import { Engine } from 'virtjs-gbjit/Engine';
+import { inputs } from 'virtjs-gbjit/constants';
 
 var canvas = document.querySelector( '#canvas' );
 
 // Each of them may take additional options, check the "Standard Devices" article for more information
 var input = new KeyboardInput( { map : inputs } );
-var screen = new WebGLScreen( { element : canvas } );
+var screen = new WebGLScreen( { canvas : canvas } );
+var timer = new AnimationFrameTimer( );
 
 // Once created, we can use the devices to initialize the engine
 var engine = new Engine( { devices : {
-    input: input,
-    screen: screen
+    input : input,
+    screen : screen,
+    timer : timer
 } } );
 ```
 

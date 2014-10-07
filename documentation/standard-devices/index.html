@@ -279,7 +279,17 @@
 <p>This method defines the color value of a specific pixel.</p>
 <h4 id="flushscreen-">flushScreen( )</h4><p><strong>This method should probably be only called by engines.</strong></p>
 <p>It informs the device that the current frame has been completed, and that the pending updates can be displayed.</p>
-<h3 id="implementations">Implementations</h3><h4 id="new-webglscreen-element-">new WebGLScreen( { element } )</h4><p>This device is using a WebGL canvas in order to display its output. The <code>element</code> option is the canvas (if missing, a new canvas will be created and put available in the <code>element</code> property of the created instance).</p>
+<h3 id="implementations">Implementations</h3><h4 id="new-webglscreen-canvas-filteroptions-">new WebGLScreen( { canvas, filterOptions } )</h4><p>This device is using a WebGL canvas in order to display its output. The <code>canvas</code> option is the output canvas (if missing, a new canvas will be created and put available in the <code>canvas</code> property of the created instance). The output will use a default GLSL shader which can be tweaked with a few options. The allowed keys in the <code>filterOptions</code> object are :</p>
+<ul>
+<li><strong>hardScan</strong></li>
+<li><strong>hardPix</strong></li>
+<li><strong>darkMask</strong></li>
+<li><strong>lightMask</strong></li>
+<li><strong>outerVig</strong></li>
+<li><strong>innerVig</strong></li>
+<li><strong>bending</strong></li>
+</ul>
+<h4 id="new-datascreen-">new DataScreen( )</h4><p>This device is not really made to be used by the end-user. It stores the pixel output inside a Uint8Array.</p>
 <h4 id="new-nullscreen-">new NullScreen( )</h4><p>The <code>NullScreen</code> is the dead-simple screen no-op. It never does anything. Useful when you want to achieve maximal performance under most restrictive environments (such as running tests in a Node.js context).</p>
 <hr>
 <h2 id="input-devices-virtjs-devices-inputs-">Input Devices (<code>virtjs/devices/inputs/*</code>)</h2><h3 id="standard-api">Standard API</h3><h4 id="destroy-force-false-">destroy( { force = false } )</h4><p>Call this method when you wish to unbind any attached event. The device will probably stop working as expected when the call return, even if there is no guarantee (some devices will want to clean their state before leaving). Use the <code>force</code> option to explicitely ask to end everything <em>now</em>.</p>
@@ -292,6 +302,14 @@
 </ul>
 <p>In this last case, a map is deduced based on the symbol names (basically, arrow keys are mapped on left/right/up/down symbols, and a few other keys are mapped too). Not all engines are compatible with this last option.</p>
 <h4 id="new-nullinput-">new NullInput( )</h4><p>The <code>NullInput</code> is the dead-simple input no-op. It never does anything. Useful when you want to achieve maximal performance under most restrictive environments (such as running tests in a Node.js context).</p>
+<p>--</p>
+<h2 id="timer-devices-virtjs-devices-timers-">Timer Devices (<code>virtjs/devices/timers/*</code>)</h2><h3 id="standard-api">Standard API</h3><h4 id="nexttick-callback-">nextTick( callback )</h4><p><strong>This method should probably be only called by engines.</strong></p>
+<p>Schedule a function to be called on the next tick. Return a &#39;marker&#39;, which can have any value.</p>
+<h4 id="canceltick-marker-">cancelTick( marker )</h4><p><strong>This method should probably be only called by engines.</strong></p>
+<p>Unschedule a callback registered with <code>nextTick</code>.</p>
+<h3 id="implementations">Implementations</h3><h4 id="animationframetimer-">AnimationFrameTimer( )</h4><p>Your go-to when using Virtjs on browsers, it uses the builtin <code>requestAnimationFrame</code> function.</p>
+<h4 id="immediatetimer-">ImmediateTimer( )</h4><p>Node application may want to use this. It uses the <code>setImmediate</code> builtin.</p>
+<h4 id="nulltimer-">NullTimer( )</h4><p>Never call any callback. You probably don&#39;t want to use it, except in some rare cases.</p>
 
             </article>
 
