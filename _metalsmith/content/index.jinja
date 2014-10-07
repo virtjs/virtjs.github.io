@@ -64,4 +64,16 @@ title: Javascript Emulation Library
         <pre><code>{{ example | highlight | safe }}</code></pre>
     </section>
 
+    <script src="https://jspm.io/traceur@0.0.49.js"></script>
+    <script src="https://jspm.io/es6-module-loader@0.7.1.js"></script>
+    <script src="https://jspm.io/system@0.6.7.js"></script>
+
+    <script>
+        System.paths[ 'virtjs/*' ] = '/virtjs/libraries/virtjs/virtjs/*.js';
+        System.paths[ 'virtjs-gbjit/*' ] = '/virtjs/libraries/virtjs-gbjit/virtjs-gbjit/*.js';
+        System.paths[ 'scripts/*' ] = '/scripts/*.js';
+
+        System.import( 'scripts/example' );
+    </script>
+
 {% endblock %}

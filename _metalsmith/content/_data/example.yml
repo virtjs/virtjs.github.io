@@ -1,18 +1,24 @@
 |
     // By the way, this exact code is used for launching the emulator above :)
 
-    import { WebGLScreen }    from 'virtjs/devices/screens/WebGLScreen';
-    import { KeyboardInput }  from 'virtjs/devices/inputs/KeyboardInput';
-    import { fetch }          from 'virtjs/utilities/fetch';
-    import { Engine, inputs } from 'virtjs-gbjit/Engine';
+    import { KeyboardInput }       from 'virtjs/devices/inputs/KeyboardInput';
+    import { WebGLScreen }         from 'virtjs/devices/screens/WebGLScreen';
+    import { AnimationFrameTimer } from 'virtjs/devices/timers/AnimationFrameTimer';
+    import { fetch }               from 'virtjs/tools';
 
-    var screen = new WebGLScreen( { element : document.querySelector( '.example .screen' ) } );
+    import { Engine }              from 'virtjs-gbjit/Engine';
+    import { inputs }              from 'virtjs-gbjit/constants';
+
     var input = new KeyboardInput( { inputs : inputs } );
+    var screen = new WebGLScreen( { canvas : document.querySelector( '.example .screen' ) } );
+    var timer = new AnimationFrameTimer( );
 
-    var engine = new Engine( { devices : {
+    var engine = window.engine = new Engine( { devices : {
+        input : input,
         screen : screen,
-        input : input
+        timer : timer
     } } );
 
-    var rom = fetch( '/roms/2048-sanqui.gb' );
-    engine.loadArrayBuffer( rom );
+    fetch( '/roms/tuff.gb' ).then( rom => {
+        engine.loadArrayBuffer( rom );
+    } );

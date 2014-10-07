@@ -123,8 +123,8 @@ metalsmith( __dirname )
     .clean( false )
 
     .use( function ( files, metalsmith, done ) {
-        // Manual clean to preserve .git and _metalsmith
-        exec( "find .. -maxdepth 1 -not \\( -name 'CNAME' -o -name '_*' -o -name '.*' \\) -exec rm -r {} \\;", function ( error, stdout, stderr ) {
+        // Manual clean to preserve .git, virtjs and _metalsmith
+        exec( "find .. -maxdepth 1 -not \\( -name 'CNAME' -o -name 'virtjs' -o -name '_*' -o -name '.*' \\) -exec rm -r {} \\;", function ( error, stdout, stderr ) {
             done( );
         } );
     } )
@@ -215,7 +215,7 @@ metalsmith( __dirname )
 
             var dir = Path.dirname( file );
             var base = Path.basename( file, Path.extname( file ) );
-            var out = Path.join( dir, base + '.html' );
+            var out = Path.join( dir, base + ( base.indexOf( '.' ) === -1 ? '.html' : '' ) );
 
             var data = { };
 
