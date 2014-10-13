@@ -30,6 +30,8 @@ body {
     }
 
     .logo .image, .responsive-logo .image {
+        display: block;
+
         position: absolute;
         left: 0; right: 0;
         top: 30px; bottom: 30px;

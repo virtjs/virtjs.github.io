@@ -119,6 +119,7 @@ code {
     padding-bottom: 60px;
     background-image: linear-gradient(to bottom, #829DD6 0, #187C7B 100%); }
   .show .logo .image, .show .responsive-logo .image {
+    display: block;
     position: absolute;
     left: 0;
     right: 0;

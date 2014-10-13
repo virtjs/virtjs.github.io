@@ -7,7 +7,7 @@ title:  Examples
 
 Drop me a [mail](mailto:nison.mael@gmail.com) and I'll gladly add your projects on this page!
 
-## [Pokelib](https://github.com/arcanis/pokelib) ([example](https://github.com/arcanis/pokelib))
+## [Pokelib](https://github.com/arcanis/pokelib) ([example](http://arcanis.github.io/pokelib/example/))
 
 ![](http://i.imgur.com/L4jZIzW.jpg)
 
