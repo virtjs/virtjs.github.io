@@ -11,7 +11,7 @@ In some cases, you may want to hook some parts of the engine while it's running.
 ## Usage
 
 ```js
-import { Engine } from 'virtjs-gb/Engine';
+import { Engine } from 'virtjs/arch/gb/Engine';
 
 var engine = new Engine( { events : [
     'setup',      // enable the 'setup' event
@@ -43,6 +43,24 @@ Here is the list of the events for standard engines (each engine expose its own 
 
 Emitted after an environment is bound to an engine.
 
+#### error
+
+**Available on `engine` with the `error` namespace**
+
+Emitted when an instruction triggers an error.
+
+#### start
+
+**Available on `engine` with the `start` namespace**
+
+Emitted when the execution resumes.
+
+#### stop
+
+**Available on `engine` with the `start` namespace**
+
+Emitted when the execution pauses.
+
 #### instruction (address, opcode, breakRequested)
 
 **Available on `engine.interpreter` with the `instruction` namespace.**
@@ -50,7 +68,7 @@ Emitted after an environment is bound to an engine.
 Emitted before the emulator execute an instruction.
 
 <div class="alert alert-info" role="alert">
-    `breakRequested` is writable: you can set it to `true` (default `false`). If you do so, the emulator will leave the execution before executing the instruction.
+    `breakRequested` is writable: you can set it to `true` (default `false`). If you do so, the emulator will leave the execution before actually executing the instruction.
 </div>
 
 <div class="alert alert-warning" role="alert">
@@ -58,10 +76,8 @@ Emitted before the emulator execute an instruction.
 </div>
 
 ```js
-engine.on( 'instruction', event => {
-    if ( address === 0x0042 ) {
-        event.breakRequested = true;
-    }
+engine.interpreter.on( 'instruction', event => {
+    event.breakRequested = true;
 } );
 ```
 

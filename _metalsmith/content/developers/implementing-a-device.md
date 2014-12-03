@@ -62,7 +62,7 @@ import { mixin }        from 'virtjs/utils/ObjectUtils';
 /**
  * Usage:
  *
- * import { inputs } from 'virtjs-gb/Engine';
+ * import { inputs } from 'virtjs/arch/gb/Engine';
  *
  * new RandomInput( {
  *     delay: 1000,

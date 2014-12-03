@@ -267,17 +267,20 @@
 <p>This method defines the color value of a specific pixel.</p>
 <h4 id="flushscreen-">flushScreen( )</h4><p><strong>This method should probably be only called by engines.</strong></p>
 <p>It informs the device that the current frame has been completed, and that the pending updates can be displayed.</p>
-<h3 id="implementations">Implementations</h3><h4 id="new-webglscreen-canvas-filteroptions-">new WebGLScreen( { canvas, filterOptions } )</h4><p>This device is using a WebGL canvas in order to display its output. The <code>canvas</code> option is the output canvas (if missing, a new canvas will be created and put available in the <code>canvas</code> property of the created instance). The output will use a default GLSL shader which can be tweaked with a few options. The allowed keys in the <code>filterOptions</code> object are :</p>
-<ul>
-<li><strong>hardScan</strong></li>
-<li><strong>hardPix</strong></li>
-<li><strong>darkMask</strong></li>
-<li><strong>lightMask</strong></li>
-<li><strong>outerVig</strong></li>
-<li><strong>innerVig</strong></li>
-<li><strong>bending</strong></li>
+<h3 id="implementations">Implementations</h3><h4 id="new-webglscreen-canvas-">new WebGLScreen( { canvas } )</h4><p>This device is using a WebGL canvas in order to display its output. The <code>canvas</code> option is the output canvas (if missing, a new canvas will be created and put available in the <code>canvas</code> property of the created instance). The output will use a default GLSL shader, but you can use a custom one by using the <code>setShaderProgram()</code> method.</p>
+<h5 id="setshaderprogram-program-">setShaderProgram( program )</h5><p>Set a new shader used to render the screen. You have to create it manually. This shader can access the following variables:</p>
+<h6 id="uniforms">uniforms</h6><ul>
+<li>mat4 uMatrix</li>
+<li>sampler2D uScreenTexture</li>
+<li>vec2 uInputResolution</li>
+<li>vec2 uOutputResolution</li>
+<li>vec2 uViewportResolution</li>
 </ul>
-<h4 id="new-datascreen-">new DataScreen( )</h4><p>This device is not really made to be used by the end-user. It stores the pixel output inside a Uint8Array.</p>
+<h6 id="attributes">attributes</h6><ul>
+<li>vec3 aVertexPosition</li>
+<li>vec2 aVertexTextureUv</li>
+</ul>
+<h4 id="new-datascreen-">new DataScreen( )</h4><p>This device is not really meant to be used by the end-user. It stores the pixel output inside a Uint8Array.</p>
 <h4 id="new-nullscreen-">new NullScreen( )</h4><p>The <code>NullScreen</code> is the dead-simple screen no-op. It never does anything. Useful when you want to achieve maximal performance under most restrictive environments (such as running tests in a Node.js context).</p>
 <hr>
 <h2 id="input-devices-virtjs-devices-inputs-">Input Devices (<code>virtjs/devices/inputs/*</code>)</h2><h3 id="standard-api">Standard API</h3><h4 id="destroy-force-false-">destroy( { force = false } )</h4><p>Call this method when you wish to unbind any attached event. The device will probably stop working as expected when the call return, even if there is no guarantee (some devices will want to clean their state before leaving). Use the <code>force</code> option to explicitely ask to end everything <em>now</em>.</p>

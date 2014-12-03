@@ -9,12 +9,12 @@ title:   Instanciating an Emulator
 A Virtjs emulator is a simple object. Its exact type depends on the emulator (there is no strict inheritance), but that doesn't really matter since most emulators will expose the same API. For example, assuming you want to instanciate a Gameboy emulator, the following code is a good start.
 
 ```js
-import { Engine } from 'virtjs-gb/Engine';
+import { Engine } from 'virtjs/arch/gb/Engine';
 
 var engine = new Engine( /*...*/ );
 ```
 
-Most of emulators then require some devices in order to communicate with the world (think input & output). A device is a class instance exposing a few handy methods used by the emulators. For example, the Gameboy use these devices:
+Most of emulators then require some devices in order to communicate with the world (both input & output). A device is a class instance exposing a few handy methods used by the emulators. For example, the Gameboy use these devices:
 
 ```js
 // The "Input" devices usually handle user inputs
@@ -27,8 +27,8 @@ import { WebGLScreen } from 'virtjs/devices/screens/WebGLScreen';
 import { AnimationFrameTimer } from 'virtjs/devices/timers/AnimationFrameTimer';
 
 // The "inputs" variable contains a dict used to feed the Input devices
-import { Engine } from 'virtjs-gb/Engine';
-import { inputs } from 'virtjs-gb/constants';
+import { Engine } from 'virtjs/arch/gb/Engine';
+import { inputs } from 'virtjs/arch/gb/constants';
 
 var canvas = document.querySelector( '#canvas' );
 
@@ -39,20 +39,18 @@ var timer = new AnimationFrameTimer( );
 
 // Once created, we can use the devices to initialize the engine
 var engine = new Engine( { devices : {
-    input : input,
-    screen : screen,
-    timer : timer
+    input, screen, timer
 } } );
 ```
 
-The next step may be optional depending on the engine type, but you will probably want to select some kind of rom to execute. Since such thing is so common, a convenient way to do it is the `fetch` / `loadArrayBuffer` combination, which should work whatever the environment is.
+The next step may be optional depending on the engine type, but you will probably want to select some kind of rom to execute. Since such thing is so common, a convenient way to do it is the `fetchArrayBuffer` / `loadArrayBuffer` combination, which should work whatever the environment is (the `fetchArrayBuffer` methods takes a `Blob` or `Buffer` object, a filesystem path, or an URL).
 
 ```js
-import { fetch } from 'virtjs/tools';
+import { fetchArrayBuffer } from 'virtjs/utils/DataUtils';
 
 var engine = new Engine( /*...*/ );
 
-fetch( './testrom.gb' ).then( rom => {
+fetchArrayBuffer( './testrom.gb' ).then( rom => {
     engine.loadArrayBuffer( rom );
 } );
 ```

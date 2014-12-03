@@ -40,21 +40,30 @@ It informs the device that the current frame has been completed, and that the pe
 
 ### Implementations
 
-#### new WebGLScreen( { canvas, filterOptions } )
+#### new WebGLScreen( { canvas } )
 
-This device is using a WebGL canvas in order to display its output. The `canvas` option is the output canvas (if missing, a new canvas will be created and put available in the `canvas` property of the created instance). The output will use a default GLSL shader which can be tweaked with a few options. The allowed keys in the `filterOptions` object are :
+This device is using a WebGL canvas in order to display its output. The `canvas` option is the output canvas (if missing, a new canvas will be created and put available in the `canvas` property of the created instance). The output will use a default GLSL shader, but you can use a custom one by using the `setShaderProgram()` method.
 
-  - **hardScan**
-  - **hardPix**
-  - **darkMask**
-  - **lightMask**
-  - **outerVig**
-  - **innerVig**
-  - **bending**
+##### setShaderProgram( program )
+
+Set a new shader used to render the screen. You have to create it manually. This shader can access the following variables:
+
+###### uniforms
+
+  - mat4 uMatrix
+  - sampler2D uScreenTexture
+  - vec2 uInputResolution
+  - vec2 uOutputResolution
+  - vec2 uViewportResolution
+
+###### attributes
+
+  - vec3 aVertexPosition
+  - vec2 aVertexTextureUv
 
 #### new DataScreen( )
 
-This device is not really made to be used by the end-user. It stores the pixel output inside a Uint8Array.
+This device is not really meant to be used by the end-user. It stores the pixel output inside a Uint8Array.
 
 #### new NullScreen( )
 

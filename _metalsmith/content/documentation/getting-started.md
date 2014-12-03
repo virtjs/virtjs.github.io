@@ -6,29 +6,48 @@ title:   Getting Started
 
 # Getting Started
 
-## Development
+## Node.js
 
-First, include jspm somewhere in your page :
+Install the `virtjs` npm package:
+
+```
+$> npm install virtjs
+```
+
+The module exports a single function, that you can use to actually import the Virtjs modules you wish to use:
+
+```
+var virtjs = require( 'virtjs' );
+
+var Engine = virtjs( 'arch/gb/Engine' );
+```
+
+## Browser, as a standalone file
+
+Just like for Node.js, include the [latest dist build](https://github.com/arcanis/virt.js/blob/master/build/output/virtjs.web.js) from the repository, link it in a `<script>` tag, then use the global `virtjs` function to load the modules:
+
+```
+var engine = virtjs( 'arch/gb/Engine' );
+```
+
+## Browser, directly using ES6 modules
+
+First, include jspm somewhere in your page:
 
 ```html
 <script src="https://jspm.io/system@0.6.7.js"></script>
 ```
 
-Then clone Virtjs and configure your paths :
+Then clone Virtjs and configure your paths:
 
 ```
 $> git clone git@github.com:arcanis/virt.js virtjs
-$> ( cd virtjs && git checkout next )
+$> cd virtjs
 ```
-
-<div class="alert alert-warning" role="alert">
-    <strong>Don't forget to checkout!</strong> The branch *master* currently contains a different (old) version of Virtjs. Since then, the project has slightly shifted (mainly from ES5 to ES6), and master has not been updated yet to reflect this change. So don't forget to checkout the *next* branch!
-</div>
 
 ```html
 <script>
-    System.paths[ 'virtjs/*' ] = '/virtjs/libraries/virtjs/virtjs/*.js';
-    System.paths[ 'virtjs-gb/*' ] = '/virtjs/libraries/virtjs-gb/virtjs-gb/*.js';
+    System.paths[ 'virtjs/*' ] = '/virtjs/sources/*.js';
 </script>
 ```
 
@@ -37,7 +56,7 @@ And finally, load the modules you wish to use !
 ```html
 <script>
     Promise.all( [
-        System.import( 'virtjs-gb/Engine' )
+        System.import( 'virtjs/arch/gb/Engine' )
     ] ).then( function ( modules ) {
         console.log( modules[ 0 ].Engine );
     } );
@@ -55,13 +74,7 @@ However, my personal advice is to use ES6 yourself, so you would end up with thi
 And, in `my-script.js` :
 
 ```js
-import { Engine } from 'virtjs-gb/Engine';
+import { Engine } from 'virtjs/arch/gb/Engine';
 
 console.log( Engine );
 ```
-
-## Release
-
-Short answer : concatenate the Traceur output, or use the JSPM bundler.
-
-*More to come about this.*
