@@ -6,7 +6,7 @@ title:   Implementing a Device
 
 # Implementing a Device
 
-Despite having a few handy default devices, you may want to create your own, better suited to your usage. Since this task is very easy, we will see some examples rather than doing a step-by-step. Remember: just like about everything else in Virt.js, implementing a device is merely creating a class with a few methods. Easy!
+Despite having a few handy default devices, you may want to create your own, better suited to your usage. Since this task is very easy, we will see some examples rather than doing a step-by-step. Remember: just like about everything else in Virtjs, implementing a device is merely creating a class with a few methods. Easy!
 
 ## Stat Screen Device
 
